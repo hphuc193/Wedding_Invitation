@@ -1187,29 +1187,36 @@
 <script>
   // Countdown Timer
   function updateCountdown() {
-    const weddingDate = new Date('2026-04-20T08:00:00');
-    const now = new Date();
+    // 1. Thiết lập ngày cưới đích (Năm, Tháng - 1, Ngày, Giờ, Phút)
+    // Lưu ý: Tháng trong JS bắt đầu từ 0 (Tháng 4 là số 3)
+    const weddingDate = new Date(2026, 3, 15, 0, 0, 0).getTime();
+    
+    // 2. Lấy thời gian hiện tại
+    const now = new Date().getTime();
+    
+    // 3. Tính khoảng cách
     const diff = weddingDate - now;
 
+    // 4. Nếu đã qua ngày cưới
     if (diff <= 0) {
-      document.getElementById('cd-days').textContent = '00';
-      document.getElementById('cd-hours').textContent = '00';
-      document.getElementById('cd-mins').textContent = '00';
-      document.getElementById('cd-secs').textContent = '00';
-      return;
+        document.querySelector('.countdown-grid').innerHTML = "<p style='color:var(--red); font-weight:bold;'>HÔM NAY LÀ NGÀY CHUNG ĐÔI!</p>";
+        return;
     }
 
+    // 5. Tính toán đơn vị thời gian
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     const secs = Math.floor((diff % (1000 * 60)) / 1000);
 
+    // 6. Hiển thị lên giao diện (với định dạng 00)
     document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
     document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
     document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
     document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
-  }
+}
 
+  // Khởi chạy ngay lập tức và thiết lập interval
   updateCountdown();
   setInterval(updateCountdown, 1000);
 
