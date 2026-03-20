@@ -839,15 +839,18 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100%; 
-    max-width: 450px; /* BẠN CHỈNH KÍCH THƯỚC CHỮ HỶ TẠI ĐÂY */
-    height: 100%;
+    
+    /* Thu nhỏ vùng chứa để tạo khoảng cách với mép footer */
+    width: 90%; /* Cách viền trái/phải một khoảng an toàn */
+    max-width: 400px; /* Bóp lại một chút so với 450px ban đầu để chữ gọn hơn */
+    height: 75%; /* Tạo khoảng trống (padding) với viền trên và dưới */
+    
     background-image: url('Icon.png');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     
-    opacity: 0.15; /* BẠN CHỈNH ĐỘ MỜ TẠI ĐÂY (0.1 đến 0.3 là đẹp nhất) */
+    opacity: 0.15;
     z-index: -1;
     pointer-events: none;
   }
@@ -1251,7 +1254,9 @@
             <rect x="14" y="14" width="3" height="3"></rect>
           </svg>
 
-          <div class="gift-card-icon">🏦</div>
+          <div class="gift-card-icon">
+            <img src="Container.png" alt="Lì xì chúc phúc">
+          </div>
           <div class="gift-card-title">Chuyển Khoản</div>
           <div class="gift-card-name">PHAM GIA LUAN</div>
           <div class="gift-card-num">0777575818</div>
@@ -1271,7 +1276,9 @@
       </div>
     </div>
     <div class="gift-card">
-      <div class="gift-card-icon">🧧</div>
+      <div class="gift-card-icon">
+        <img src="iconmail.png" alt="Lì xì chúc phúc">
+      </div>
       <div class="gift-card-title">Lì Xì Chúc Phúc</div>
       <div class="gift-card-desc">
         Quý khách có thể gửi lời chúc và quà mừng tại thùng hộp được đặt tại sảnh tiệc.
