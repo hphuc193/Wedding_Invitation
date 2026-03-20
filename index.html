@@ -654,7 +654,7 @@
   }
 
   .gift-card-icon {
-    font-size: 1.8rem;
+    font-size: 1.2rem;
     margin-bottom: 10px;
   }
 
@@ -714,6 +714,56 @@
   .gift-card-link:hover {
     background: var(--red);
     color: var(--white);
+  }
+
+  #gift .gift-grid {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    max-width: 860px; /* Tăng từ 620px lên 860px */
+    margin: 0 auto;
+    align-items: stretch; /* Đảm bảo 2 thẻ luôn cao bằng nhau */
+  }
+
+  /* 2. Chuẩn hóa lại khung viền hình ảnh */
+  .transfer-card-with-border {
+    flex: 1;
+    background: var(--white);
+    border: 20px solid transparent; /* Độ dày của khung */
+    border-image-source: url('Border001.png');
+    border-image-slice: 30; /* Tinh chỉnh số này (20-40) để không méo góc */
+    border-image-width: 20px;
+    border-image-repeat: round;
+    
+    /* Cân đối lại padding vừa phải để không đẩy chiều cao lên quá mức */
+    padding: 15px 10px; 
+    box-sizing: border-box;
+
+    /* Dùng Flexbox để nội dung luôn tự động căn giữa chữ nhật */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* 3. Patch sửa lỗi Double Padding cho thẻ lật 3D bên trong */
+  .transfer-card-with-border .gift-card-flip {
+    width: 100%;
+    height: 100%;
+  }
+
+  .transfer-card-with-border .front, 
+  .transfer-card-with-border .back {
+    border: none !important; /* Xóa viền thừa bên trong */
+    padding: 0 !important;   /* Xóa padding thừa để giảm chiều cao */
+    background: transparent !important;
+    
+    /* Ép nội dung bên trong mặt lật căn giữa hoàn hảo */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
   }
 
   /* ===== RSVP ===== */
@@ -1044,6 +1094,46 @@
     border-radius: 4px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   }
+  /* === KHUNG BAO QUANH CHUYỂN KHOẢN === */
+  .transfer-card-with-border {
+    flex: 1; /* Giữ thuộc tính co giãn của grid */
+    background: var(--white); /* Nền trắng như mặc định */
+    
+    /* 1. Thiết lập border cơ sở để border-image hiển thị.
+       Chiều rộng border này (ví dụ 20px) sẽ là chiều rộng khung hiển thị.
+       Ta đặt màu transparent để border mặc định không hiện lên. */
+    border: 20px solid transparent; 
+
+    /* 2. Cấu hình border-image */
+    border-image-source: url('Border001.png'); /* Đường dẫn đến file ảnh khung */
+    
+    /* Thuộc tính slice: Xác định cách cắt ảnh để lấy góc và cạnh.
+       GIÁ TRỊ NÀY LÀ ƯỚC LƯỢNG VÀ CẦN ĐIỀU CHỈNH DỰA TRÊN FILE ẢNH THẬT.
+       Ví dụ: Nếu góc trang trí trong ảnh Border001.png rộng 30px, ta đặt là 30.
+       Ta cần thử nghiệm giá trị này để khung không bị méo. Thường là pixel hoặc %. */
+    border-image-slice: 30; 
+
+    /* Thuộc tính width: Chiều rộng khung hiển thị trên web.
+       Thường nên đặt giống với chiều rộng border cơ sở ở trên để ảnh không bị co dãn méo.
+       CÓ THỂ THAY ĐỔI GIÁ TRỊ NÀY ĐỂ LÀM KHUNG DÀY HƠN HOẶC MỎNG HƠN.
+       Ví dụ: Muốn khung mỏng hơn, đặt là 10px; muốn dày hơn, đặt là 30px. */
+    border-image-width: 20px; 
+    
+    border-image-repeat: round; /* Cạnh khung sẽ được lặp lại mượt mà để khớp chiều dài */
+
+    /* 3. Thêm padding để nội dung không bị đè lên khung.
+       Tăng padding so với mặc định để tạo khoảng không gian đẹp. */
+    padding: 30px 22px; 
+    
+    text-align: center; /* Giữ thuộc tính căn giữa */
+    
+    /* Border-image không hoạt động tốt với border-radius,
+       nên ta đặt border-radius về 0. */
+    border-radius: 0; 
+
+    /* Đảm bảo padding và border không làm khối to hơn mong muốn */
+    box-sizing: border-box; 
+  }
 </style>
 </head>
 <body>
@@ -1268,48 +1358,51 @@
 <section id="gift">
   <p class="section-title fade-in">HỘP MỪNG CƯỚI</p>
   <div class="gift-grid fade-in">
-    <div class="gift-card-flip" onclick="this.classList.toggle('is-flipped')">
-      <div class="flipper">
-        <div class="front">
-          <svg class="qr-icon-trigger" title="Lật để xem mã QR" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-            <rect x="7" y="7" width="3" height="3"></rect>
-            <rect x="14" y="7" width="3" height="3"></rect>
-            <rect x="7" y="14" width="3" height="3"></rect>
-            <rect x="14" y="14" width="3" height="3"></rect>
-          </svg>
-
-          <div class="gift-card-icon">
-            <img src="Container.png" alt="Lì xì chúc phúc">
-          </div>
-          <div class="gift-card-title">Chuyển Khoản</div>
-          <div class="gift-card-name">PHAM GIA LUAN</div>
-          <div class="gift-card-num">0777575818</div>
-          <div class="gift-card-bank">Ngân hàng Sacombank</div>
-        </div>
-
-        <div class="back">
-          <svg class="qr-icon-trigger" title="Lật lại" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5v0a5.5 5.5 0 0 1-5.5 5.5H11"/>
-          </svg>
+    
+    <div class="transfer-card-with-border">
+      <div class="gift-card-flip" onclick="this.classList.toggle('is-flipped')">
+        <div class="flipper">
           
-          <div class="gift-card-title" style="margin-bottom: 12px;">Quét Mã QR</div>
-          <div class="qr-img-box">
-            <img src="qr.jpg" alt="Mã QR Chuyển Khoản Sacombank">
+          <div class="front">
+            <svg class="qr-icon-trigger" title="Lật để xem mã QR" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <rect x="7" y="7" width="3" height="3"></rect>
+              <rect x="14" y="7" width="3" height="3"></rect>
+              <rect x="7" y="14" width="3" height="3"></rect>
+              <rect x="14" y="14" width="3" height="3"></rect>
+            </svg>
+
+            <div class="gift-card-icon">
+              <img src="Container.png" alt="Chuyển Khoản">
+            </div>
+            <div class="gift-card-title">Chuyển Khoản</div>
+            <div class="gift-card-name">PHAM GIA LUAN</div>
+            <div class="gift-card-num">0777575818</div>
+            <div class="gift-card-bank">Ngân hàng Sacombank</div>
           </div>
+
+          <div class="back">
+            <svg class="qr-icon-trigger" title="Lật lại" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5v0a5.5 5.5 0 0 1-5.5 5.5H11"/>
+            </svg>
+            
+            <div class="gift-card-title" style="margin-bottom: 12px;">Quét Mã QR</div>
+            <div class="qr-img-box">
+              <img src="qr.jpg" alt="Mã QR Chuyển Khoản Sacombank">
+            </div>
+          </div>
+
         </div>
       </div>
-    </div>
-    <div class="gift-card">
+    </div> <div class="transfer-card-with-border">
       <div class="gift-card-icon">
         <img src="iconmail.png" alt="Lì xì chúc phúc">
       </div>
       <div class="gift-card-title">Lì Xì Chúc Phúc</div>
-      <div class="gift-card-desc">
+      <div class="gift-card-desc" style="margin-top: 10px;">
         Quý khách có thể gửi lời chúc và quà mừng tại thùng hộp được đặt tại sảnh tiệc.
       </div>
-    </div>
-  </div>
+    </div> </div>
 </section>
 
 <!-- RSVP -->
