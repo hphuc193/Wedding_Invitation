@@ -929,7 +929,13 @@
   }
 
   /* Kích hoạt lật khi hover (PC) hoặc khi có class 'is-flipped' (Mobile click) */
-  .gift-card-flip:hover .flipper,
+  @media (hover: hover) {
+    .gift-card-flip:hover .flipper {
+      transform: rotateY(180deg);
+    }
+  }
+
+  /* 2. Kích hoạt hiệu ứng lật qua class cho thiết bị cảm ứng (Mobile Tap) */
   .gift-card-flip.is-flipped .flipper {
     transform: rotateY(180deg);
   }
