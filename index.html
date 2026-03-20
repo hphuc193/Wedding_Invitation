@@ -827,6 +827,29 @@
     color: var(--white);
     text-align: center;
     padding: 50px 20px;
+
+    position: relative; 
+    overflow: hidden; 
+    z-index: 1;
+  }
+
+  footer::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%; 
+    max-width: 450px; /* BẠN CHỈNH KÍCH THƯỚC CHỮ HỶ TẠI ĐÂY */
+    height: 100%;
+    background-image: url('Icon.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    opacity: 0.15; /* BẠN CHỈNH ĐỘ MỜ TẠI ĐÂY (0.1 đến 0.3 là đẹp nhất) */
+    z-index: -1;
+    pointer-events: none;
   }
 
   .footer-names {
