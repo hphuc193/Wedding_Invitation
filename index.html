@@ -6,7 +6,7 @@
 <title>Gia Luân & Ngọc Yến</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 <style>
   :root {
     --red: #8B0000;
@@ -179,7 +179,7 @@
 
   .hero-lunar {
     font-size: 0.75rem;
-    color: var(--text-mid);
+    color: var(--red);
     letter-spacing: 1px;
     margin-bottom: 16px;
   }
@@ -213,65 +213,132 @@
   .corner-bracket.br { border-bottom-width: 2px; border-right-width: 2px; }
 
   /* ===== COUNTDOWN ===== */
-  #countdown {
-    background: var(--cream);
-    padding: 30px 20px 50px;
-    text-align: center;
-  }
+#countdown {
+  background: var(--cream);
+  padding: 30px 20px 50px;
+  text-align: center;
+}
 
-  .countdown-box {
-    border: 2px solid var(--red-light);
-    max-width: 540px;
-    margin: 0 auto;
-    padding: 24px 30px 28px;
-    background: var(--white);
-  }
+.countdown-box {
+  border: 1.5px solid var(--red-light);
+  max-width: 580px;
+  margin: 0 auto;
+  padding: 36px 28px 32px;
+  background: var(--white);
+  position: relative;
+  overflow: hidden;
+}
 
-  .countdown-title {
-    font-size: 0.52rem;
-    font-weight: 700;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: var(--text-dark);
-    margin-bottom: 20px;
-  }
+/* --- Cánh hoa nền --- */
+.cd-petals {
+  position: absolute; inset: 0;
+  pointer-events: none; overflow: hidden;
+}
+.petal {
+  position: absolute; opacity: 0.15;
+  animation: float-petal 8s ease-in-out infinite;
+}
+@keyframes float-petal {
+  0%   { transform: translateY(0px) rotate(0deg); opacity: 0.15; }
+  50%  { transform: translateY(-12px) rotate(15deg); opacity: 0.25; }
+  100% { transform: translateY(0px) rotate(0deg); opacity: 0.15; }
+}
 
-  .countdown-title span { color: var(--red-light); }
+/* --- Góc trang trí --- */
+.cd-corner-deco {
+  position: absolute; width: 44px; height: 44px; opacity: 0.5;
+}
+.cd-corner-deco svg { width: 100%; height: 100%; }
+.cd-corner-deco.tl { top: 6px; left: 6px; }
+.cd-corner-deco.tr { top: 6px; right: 6px; transform: scaleX(-1); }
+.cd-corner-deco.bl { bottom: 6px; left: 6px; transform: scaleY(-1); }
+.cd-corner-deco.br { bottom: 6px; right: 6px; transform: scale(-1); }
 
-  .countdown-grid {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-  }
+/* --- Tiêu đề --- */
+.countdown-title {
+  font-size: 0.52rem; font-weight: 700;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--text-dark); margin-bottom: 4px;
+}
+.countdown-title span { color: var(--red-light); }
 
-  .countdown-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+/* --- Tim + đường kẻ --- */
+.cd-heart-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px; margin: 4px 0 18px;
+}
+.cd-heart-row .cd-line {
+  flex: 1; height: 1px; background: var(--gold); opacity: 0.6; max-width: 80px;
+}
+.cd-heart-svg {
+  width: 19px; height: 19px;
+  animation: heartbeat 2s ease-in-out infinite;
+  fill: var(--red-light);
+}
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  15% { transform: scale(1.28); }
+  30% { transform: scale(1); }
+  45% { transform: scale(1.15); }
+  60% { transform: scale(1); }
+}
 
-  .countdown-num {
-    background: var(--red-light);
-    color: var(--white);
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.6rem;
-    font-weight: 600;
-    width: 76px; height: 76px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 2px;
-    letter-spacing: 2px;
-  }
+/* --- Lưới số đếm --- */
+.countdown-grid {
+  display: flex; justify-content: center;
+  align-items: flex-end; gap: 0;
+}
+.countdown-item {
+  display: flex; flex-direction: column; align-items: center;
+}
+.countdown-num {
+  background: var(--red-light); color: var(--white);
+  font-family: 'Cinzel', serif;
+  font-size: 2.2rem; font-weight: 600;
+  width: 84px; height: 84px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 2px; letter-spacing: 2px;
+  position: relative; overflow: hidden;
+  transition: transform 0.15s;
+}
+.countdown-num::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 50%;
+  background: rgba(255,255,255,0.08);
+}
+.cd-sep {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem; color: var(--red-light);
+  padding: 0 4px; margin-bottom: 22px; opacity: 0.7;
+  animation: blink-sep 1.5s ease-in-out infinite;
+}
+@keyframes blink-sep { 0%,100%{opacity:0.7} 50%{opacity:0.2} }
 
-  .countdown-label {
-    font-size: 0.6rem;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-mid);
-    margin-top: 6px;
-  }
+.countdown-label {
+  font-size: 0.55rem; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text-mid); margin-top: 7px;
+  display: flex; align-items: center; gap: 4px;
+}
+.label-flower { font-size: 10px; opacity: 0.75; }
+
+/* --- Dòng dưới --- */
+.cd-footer-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px; margin-top: 18px;
+}
+.cd-footer-line { flex: 1; height: 1px; background: var(--gold); opacity: 0.4; max-width: 70px; }
+.cd-footer-text {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 0.82rem; color: var(--red); letter-spacing: 0.5px;
+}
+
+/* Flip animation */
+.flip-in { animation: flipNum 0.3s ease; }
+@keyframes flipNum {
+  from { transform: rotateX(90deg) scale(0.8); opacity: 0; }
+  to   { transform: rotateX(0deg) scale(1); opacity: 1; }
+}
 
   /* ===== GALLERY ===== */
   #gallery {
@@ -1257,27 +1324,58 @@
 </section>
 
 <!-- COUNTDOWN -->
+<!-- COUNTDOWN -->
 <section id="countdown">
   <div class="countdown-box fade-in">
+
+    <!-- Cánh hoa nền -->
+    <div class="cd-petals" id="petals"></div>
+
+    <!-- Góc trang trí -->
+    <div class="cd-corner-deco tl"><svg viewBox="0 0 44 44" fill="none"><path d="M4 40 C4 20 20 4 40 4" stroke="#C20020" stroke-width="1.2"/><circle cx="12" cy="12" r="2.5" fill="#D4AF37" opacity="0.8"/><circle cx="6" cy="18" r="1.5" fill="#C20020" opacity="0.6"/><circle cx="18" cy="6" r="1.5" fill="#C20020" opacity="0.6"/><path d="M8 8 Q11 5 14 8 Q11 11 8 8Z" fill="#C20020" opacity="0.5"/><path d="M20 20 Q22 17 25 20 Q22 23 20 20Z" fill="#D4AF37" opacity="0.5"/></svg></div>
+    <div class="cd-corner-deco tr"><svg viewBox="0 0 44 44" fill="none"><path d="M4 40 C4 20 20 4 40 4" stroke="#C20020" stroke-width="1.2"/><circle cx="12" cy="12" r="2.5" fill="#D4AF37" opacity="0.8"/><circle cx="6" cy="18" r="1.5" fill="#C20020" opacity="0.6"/><circle cx="18" cy="6" r="1.5" fill="#C20020" opacity="0.6"/><path d="M8 8 Q11 5 14 8 Q11 11 8 8Z" fill="#C20020" opacity="0.5"/><path d="M20 20 Q22 17 25 20 Q22 23 20 20Z" fill="#D4AF37" opacity="0.5"/></svg></div>
+    <div class="cd-corner-deco bl"><svg viewBox="0 0 44 44" fill="none"><path d="M4 40 C4 20 20 4 40 4" stroke="#C20020" stroke-width="1.2"/><circle cx="12" cy="12" r="2.5" fill="#D4AF37" opacity="0.8"/><circle cx="6" cy="18" r="1.5" fill="#C20020" opacity="0.6"/><circle cx="18" cy="6" r="1.5" fill="#C20020" opacity="0.6"/><path d="M8 8 Q11 5 14 8 Q11 11 8 8Z" fill="#C20020" opacity="0.5"/><path d="M20 20 Q22 17 25 20 Q22 23 20 20Z" fill="#D4AF37" opacity="0.5"/></svg></div>
+    <div class="cd-corner-deco br"><svg viewBox="0 0 44 44" fill="none"><path d="M4 40 C4 20 20 4 40 4" stroke="#C20020" stroke-width="1.2"/><circle cx="12" cy="12" r="2.5" fill="#D4AF37" opacity="0.8"/><circle cx="6" cy="18" r="1.5" fill="#C20020" opacity="0.6"/><circle cx="18" cy="6" r="1.5" fill="#C20020" opacity="0.6"/><path d="M8 8 Q11 5 14 8 Q11 11 8 8Z" fill="#C20020" opacity="0.5"/><path d="M20 20 Q22 17 25 20 Q22 23 20 20Z" fill="#D4AF37" opacity="0.5"/></svg></div>
+
     <p class="countdown-title">✦ &nbsp; ĐẾM NGƯỢC ĐẾN <span>NGÀY CHUNG ĐÔI</span> &nbsp; ✦</p>
+
+    <!-- Tim nhịp đập -->
+    <div class="cd-heart-row">
+      <div class="cd-line"></div>
+      <svg class="cd-heart-svg" viewBox="0 0 24 24"><path d="M12 21.593C11.758 21.423 6.308 17.525 4.04 15.287c-2.932-2.903-2.932-7.608 0-10.511 1.466-1.452 3.39-2.252 5.425-2.252 1.595 0 3.046.524 4.16 1.456 1.115-.932 2.566-1.456 4.16-1.456 2.036 0 3.96.8 5.426 2.252 2.93 2.903 2.93 7.608 0 10.51C20.944 17.868 15 21.593 12 21.593z"/></svg>
+      <div class="cd-line"></div>
+    </div>
+
+    <!-- Số đếm ngược -->
     <div class="countdown-grid">
       <div class="countdown-item">
         <div class="countdown-num" id="cd-days">00</div>
-        <div class="countdown-label">Ngày</div>
+        <div class="countdown-label"><span class="label-flower">🌸</span>Ngày<span class="label-flower">🌸</span></div>
       </div>
+      <div class="cd-sep">:</div>
       <div class="countdown-item">
         <div class="countdown-num" id="cd-hours">00</div>
-        <div class="countdown-label">Giờ</div>
+        <div class="countdown-label"><span class="label-flower">🌷</span>Giờ<span class="label-flower">🌷</span></div>
       </div>
+      <div class="cd-sep">:</div>
       <div class="countdown-item">
         <div class="countdown-num" id="cd-mins">00</div>
-        <div class="countdown-label">Phút</div>
+        <div class="countdown-label"><span class="label-flower">✿</span>Phút<span class="label-flower">✿</span></div>
       </div>
+      <div class="cd-sep">:</div>
       <div class="countdown-item">
         <div class="countdown-num" id="cd-secs">00</div>
-        <div class="countdown-label">Giây</div>
+        <div class="countdown-label"><span class="label-flower">❀</span>Giây<span class="label-flower">❀</span></div>
       </div>
     </div>
+
+    <!-- Dòng chữ cuối -->
+    <div class="cd-footer-row">
+      <div class="cd-footer-line"></div>
+      <span class="cd-footer-text">Luân &amp; Yến · 15.04.2026</span>
+      <div class="cd-footer-line"></div>
+    </div>
+
   </div>
 </section>
 
@@ -1549,39 +1647,56 @@
 <!-- SCRIPTS -->
 <script>
   // Countdown Timer
-  function updateCountdown() {
-    // 1. Thiết lập ngày cưới đích (Năm, Tháng - 1, Ngày, Giờ, Phút)
-    // Lưu ý: Tháng trong JS bắt đầu từ 0 (Tháng 4 là số 3)
-    const weddingDate = new Date(2026, 3, 15, 0, 0, 0).getTime();
-    
-    // 2. Lấy thời gian hiện tại
-    const now = new Date().getTime();
-    
-    // 3. Tính khoảng cách
-    const diff = weddingDate - now;
+  // Sinh cánh hoa trang trí nền
+(function() {
+  const container = document.getElementById('petals');
+  if (!container) return;
+  const shapes = [
+    '<svg viewBox="0 0 20 20"><ellipse cx="10" cy="10" rx="5" ry="9" fill="#C20020"/></svg>',
+    '<svg viewBox="0 0 20 20"><ellipse cx="10" cy="10" rx="4" ry="8" fill="#D4AF37"/></svg>',
+    '<svg viewBox="0 0 20 20"><path d="M10 1 Q18 10 10 19 Q2 10 10 1Z" fill="#E8C8CC"/></svg>',
+    '<svg viewBox="0 0 20 20"><path d="M10 2 Q17 6 16 13 Q10 18 4 13 Q3 6 10 2Z" fill="#C20020"/></svg>',
+  ];
+  for (let i = 0; i < 14; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    const size = 10 + Math.random() * 18;
+    p.style.cssText = `left:${Math.random()*95}%;top:${Math.random()*95}%;width:${size}px;height:${size}px;transform:rotate(${Math.random()*360}deg);animation-delay:${Math.random()*6}s;animation-duration:${6+Math.random()*5}s;`;
+    p.innerHTML = shapes[i % shapes.length];
+    container.appendChild(p);
+  }
+})();
 
-    // 4. Nếu đã qua ngày cưới
-    if (diff <= 0) {
-        document.querySelector('.countdown-grid').innerHTML = "<p style='color:var(--red); font-weight:bold;'>HÔM NAY LÀ NGÀY CHUNG ĐÔI!</p>";
-        return;
+// Countdown
+let cdPrev = {};
+function updateCountdown() {
+  const weddingDate = new Date(2026, 3, 15, 0, 0, 0).getTime();
+  const now = new Date().getTime();
+  const diff = weddingDate - now;
+  if (diff <= 0) {
+    document.querySelector('.countdown-grid').innerHTML = "<p style='color:var(--red);font-weight:bold;font-family:Cormorant Garamond,serif;font-size:1.4rem;'>🎊 Hôm nay là ngày chung đôi! 🎊</p>";
+    return;
+  }
+  const vals = {
+    days:  Math.floor(diff / 86400000),
+    hours: Math.floor((diff % 86400000) / 3600000),
+    mins:  Math.floor((diff % 3600000) / 60000),
+    secs:  Math.floor((diff % 60000) / 1000)
+  };
+  ['days','hours','mins','secs'].forEach(k => {
+    const el = document.getElementById('cd-'+k);
+    const v = String(vals[k]).padStart(2,'0');
+    if (v !== cdPrev[k]) {
+      el.textContent = v;
+      el.classList.remove('flip-in');
+      void el.offsetWidth;
+      el.classList.add('flip-in');
+      cdPrev[k] = v;
     }
-
-    // 5. Tính toán đơn vị thời gian
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const secs = Math.floor((diff % (1000 * 60)) / 1000);
-
-    // 6. Hiển thị lên giao diện (với định dạng 00)
-    document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
-    document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
-    document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
-    document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
+  });
 }
-
-  // Khởi chạy ngay lập tức và thiết lập interval
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
+updateCountdown();
+setInterval(updateCountdown, 1000);
 
   // Fade-in on scroll
   const fadeEls = document.querySelectorAll('.fade-in');
