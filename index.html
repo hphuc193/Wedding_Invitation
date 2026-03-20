@@ -1605,11 +1605,11 @@
     Sự hiện diện của quý vị là niềm vinh hạnh cho gia đình chúng tôi
   </p>
   <div class="rsvp-form fade-in">
-    <input type="text" class="rsvp-input" placeholder="Họ và tên của bạn" />
-    <div class="rsvp-row">
-      <input type="tel" class="rsvp-input" placeholder="Số điện thoại" />
-      <input type="number" class="rsvp-input" placeholder="Số lượng khách" min="1" />
-    </div>
+    <input type="text" id="rsvp-name" class="rsvp-input" placeholder="Họ và tên của bạn" />
+  <div class="rsvp-row">
+    <input type="tel" id="rsvp-phone" class="rsvp-input" placeholder="Số điện thoại" />
+    <input type="number" id="rsvp-count" class="rsvp-input" placeholder="Số lượng khách" min="1" value="1" />
+  </div>
     <div class="rsvp-checkboxes">
       <span class="rsvp-checkbox-label">Bạn sẽ tham dự:</span>
       <div class="checkbox-item">
@@ -1625,7 +1625,7 @@
         <label for="cb3">Tiệc Cưới Chính Thức</label>
       </div> -->
     </div>
-    <textarea class="rsvp-textarea" placeholder="Lời chúc gửi tới đôi uyên ương..."></textarea>
+    <textarea id="rsvp-message" class="rsvp-textarea" placeholder="Lời chúc gửi tới đôi uyên ương..."></textarea>
     <button class="rsvp-btn" onclick="submitRSVP()">GỬI XÁC NHẬN</button>
     <div class="rsvp-success" id="rsvp-success">
       🎊 Cảm ơn bạn đã xác nhận! Hân hạnh được đón tiếp quý khách!
@@ -1712,15 +1712,77 @@ setInterval(updateCountdown, 1000);
   fadeEls.forEach(el => observer.observe(el));
 
   // RSVP Submit
-  function submitRSVP() {
-    const name = document.querySelector('.rsvp-input').value.trim();
-    if (!name) {
+  async function submitRSVP() {
+    const API_URL = "https://script.google.com/macros/s/AKfycbxY1IU0o0wJAkM_y7CaWh2msrhbiHunU2I0lp7y7I3UcrzlvsNJehxWgpuUORVilTq4/exec";
+    
+    const nameInput = document.getElementById('rsvp-name');
+    const phoneInput = document.getElementById('rsvp-phone');
+    const countInput = document.getElementById('rsvp-count');
+    const messageInput = document.getElementById('rsvp-message');
+    const btnSubmit = document.getElementById('btn-submit');
+
+    // Validation cơ bản
+    if (!nameInput.value.trim()) {
       alert('Vui lòng nhập họ và tên của bạn.');
+      nameInput.focus();
       return;
     }
-    const successEl = document.getElementById('rsvp-success');
-    successEl.style.display = 'block';
-    successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    // Thu thập các sự kiện tham gia từ checkbox
+    let events = [];
+    if(document.getElementById('cb1').checked) events.push("Vu Quy");
+    if(document.getElementById('cb2').checked) events.push("Thành Hôn");
+    // if(document.getElementById('cb3').checked) events.push("Tiệc Cưới");
+
+    // Đóng gói Payload
+    const payload = {
+      name: nameInput.value.trim(),
+      phone: phoneInput.value.trim(),
+      count: countInput.value || 1,
+      events: events.join(", "),
+      message: messageInput.value.trim()
+    };
+
+    // UX: Thay đổi trạng thái nút bấm (Loading state)
+    const originalBtnText = btnSubmit.innerText;
+    btnSubmit.innerText = "ĐANG GỬI...";
+    btnSubmit.disabled = true;
+
+    try {
+      // Bắn request POST bằng Fetch API
+      // Lưu ý: Dùng text/plain để vượt qua cơ chế CORS preflight của Google Apps Script
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8",
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await response.json();
+
+      if (result.status === "success") {
+        // Hiển thị thông báo thành công
+        const successEl = document.getElementById('rsvp-success');
+        successEl.style.display = 'block';
+        successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // Reset form
+        nameInput.value = '';
+        phoneInput.value = '';
+        countInput.value = '1';
+        messageInput.value = '';
+      } else {
+        alert("Có lỗi xảy ra, vui lòng thử lại sau.");
+      }
+    } catch (error) {
+      console.error("Lỗi:", error);
+      alert("Lỗi kết nối mạng, vui lòng kiểm tra lại.");
+    } finally {
+      // Phục hồi trạng thái nút bấm
+      btnSubmit.innerText = originalBtnText;
+      btnSubmit.disabled = false;
+    }
   }
 </script>
 
