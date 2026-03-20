@@ -1032,19 +1032,64 @@
   }
 
   /* ===== RESPONSIVE ===== */
+  /* ===== RESPONSIVE (BẢN VÁ FIX LỖI TIMELINE MOBILE) ===== */
   @media (max-width: 640px) {
     nav { padding: 0 16px; }
     .nav-links { display: none; }
     .hero-deco-top, .hero-deco-bottom { padding: 0 24px; }
     .family-section { flex-direction: column; align-items: center; gap: 28px; }
-    .program-box { padding: 24px 18px; }
-    .program-item { grid-template-columns: 1fr; gap: 2px; text-align: center; }
-    .program-event { text-align: center; }
-    .program-info { text-align: center; }
     .venue-grid, .gift-grid { flex-direction: column; }
     .rsvp-row { grid-template-columns: 1fr; }
     .gallery-grid { gap: 6px; }
     .countdown-num { width: 60px; height: 60px; font-size: 2rem; }
+
+    /* --- FIX TIMELINE MOBILE --- */
+    .program-box {
+      padding: 35px 20px;
+    }
+
+    /* 1. Dời trục dọc sang sát mép trái */
+    .program-list::before {
+      left: 20px;
+      transform: translateX(-50%);
+    }
+
+    /* 2. Hủy Grid 3 cột, chuyển sang Flexbox dọc để làm Timeline 1 cột */
+    .program-item {
+      display: flex !important;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0 0 35px 50px !important; /* Tạo khoảng trống 50px bên trái cho trục */
+      min-height: auto;
+    }
+
+    /* 3. Phá vỡ các thẻ div chia cột cũ để điều phối lại các thành phần con */
+    .program-left, .program-right {
+      display: contents; /* Thuộc tính cực mạnh: tháo vỏ bọc div, thả các thẻ con ra */
+    }
+
+    /* 4. Định vị chấm tròn nằm đè lên trục dọc */
+    .program-dot {
+      position: absolute;
+      left: 20px;
+      top: 0px; 
+      transform: translateX(-50%);
+      margin: 0;
+    }
+
+    /* 5. Gắn thứ tự xếp chồng (Order): Thời gian -> Tên Lễ -> Mô tả */
+    .program-time {
+      order: 1;
+      margin-bottom: 6px; /* Cách chữ Tên Lễ một khoảng để dễ nhìn */
+    }
+    .program-event-name {
+      order: 2;
+      text-align: left;
+    }
+    .program-event-desc {
+      order: 3;
+      text-align: left;
+    }
   }
 
   /* ===== HIỆU ỨNG FLIP LẬT THẺ CHUYỂN KHOẢN ===== */
