@@ -1031,9 +1031,9 @@
     transform: translateY(0);
   }
 
-  /* ===== RESPONSIVE ===== */
-  /* ===== RESPONSIVE (BẢN VÁ FIX LỖI TIMELINE MOBILE) ===== */
+  /* ===== RESPONSIVE (GIỮ NGUYÊN TIMELINE ĐAN XEN TRÊN MOBILE) ===== */
   @media (max-width: 640px) {
+    /* Các phần responsive cơ bản khác */
     nav { padding: 0 16px; }
     .nav-links { display: none; }
     .hero-deco-top, .hero-deco-bottom { padding: 0 24px; }
@@ -1043,52 +1043,49 @@
     .gallery-grid { gap: 6px; }
     .countdown-num { width: 60px; height: 60px; font-size: 2rem; }
 
-    /* --- FIX TIMELINE MOBILE --- */
+    /* --- ÉP TIMELINE ĐAN XEN THU NHỎ KÍCH THƯỚC --- */
     .program-box {
-      padding: 35px 20px;
+      padding: 30px 10px; /* Giảm khoảng cách viền hộp ngoài cùng */
     }
 
-    /* 1. Dời trục dọc sang sát mép trái */
-    .program-list::before {
-      left: 20px;
-      transform: translateX(-50%);
+    .program-title {
+      font-size: 1.6rem; /* Thu nhỏ tiêu đề */
+      margin-bottom: 30px;
     }
 
-    /* 2. Hủy Grid 3 cột, chuyển sang Flexbox dọc để làm Timeline 1 cột */
     .program-item {
-      display: flex !important;
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 0 0 35px 50px !important; /* Tạo khoảng trống 50px bên trái cho trục */
-      min-height: auto;
+      /* Thu hẹp cột chứa trục giữa từ 40px xuống còn 24px để nhường chỗ cho text */
+      grid-template-columns: 1fr 24px 1fr;
+      min-height: 70px; /* Giảm chiều cao mỗi mốc thời gian */
     }
 
-    /* 3. Phá vỡ các thẻ div chia cột cũ để điều phối lại các thành phần con */
-    .program-left, .program-right {
-      display: contents; /* Thuộc tính cực mạnh: tháo vỏ bọc div, thả các thẻ con ra */
-    }
+    /* Kéo sát nội dung vào trục giữa */
+    .program-left { padding-right: 8px; }
+    .program-right { padding-left: 8px; }
 
-    /* 4. Định vị chấm tròn nằm đè lên trục dọc */
-    .program-dot {
-      position: absolute;
-      left: 20px;
-      top: 0px; 
-      transform: translateX(-50%);
-      margin: 0;
-    }
-
-    /* 5. Gắn thứ tự xếp chồng (Order): Thời gian -> Tên Lễ -> Mô tả */
+    /* Thu nhỏ đồng bộ Typography để tránh rớt dòng */
     .program-time {
-      order: 1;
-      margin-bottom: 6px; /* Cách chữ Tên Lễ một khoảng để dễ nhìn */
+      font-size: 0.85rem;
     }
+
     .program-event-name {
-      order: 2;
-      text-align: left;
+      font-size: 0.85rem;
+      margin-bottom: 2px;
     }
+
     .program-event-desc {
-      order: 3;
-      text-align: left;
+      font-size: 0.6rem;
+      line-height: 1.4;
+    }
+
+    /* Tinh chỉnh lại kích thước Dot và quầng sáng cho cân đối với không gian hẹp */
+    .program-dot {
+      width: 6px; /* Chấm nhỏ hơn một chút */
+      height: 6px;
+      /* Thu nhỏ tỷ lệ nhiều lớp box-shadow: Trắng 3px, Hồng mờ 7px */
+      box-shadow: 
+        0 0 0 3px var(--white), 
+        0 0 0 7px rgba(194, 0, 26, 0.15);
     }
   }
 
@@ -1522,13 +1519,13 @@
         <label for="cb1">Lễ Vu Quy (Nhà Gái)</label>
       </div>
       <div class="checkbox-item">
-        <input type="checkbox" id="cb2" />
+        <input type="checkbox" id="cb2" checked />
         <label for="cb2">Lễ Thành Hôn (Nhà Trai)</label>
       </div>
-      <div class="checkbox-item">
+      <!-- <div class="checkbox-item">
         <input type="checkbox" id="cb3" checked />
         <label for="cb3">Tiệc Cưới Chính Thức</label>
-      </div>
+      </div> -->
     </div>
     <textarea class="rsvp-textarea" placeholder="Lời chúc gửi tới đôi uyên ương..."></textarea>
     <button class="rsvp-btn" onclick="submitRSVP()">GỬI XÁC NHẬN</button>
