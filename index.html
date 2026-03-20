@@ -6,14 +6,14 @@
 <title>Gia Luân & Ngọc Yến</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --red: #9B1C2E;
-    --red-light: #C0392B;
-    --gold: #C9A84C;    
+    --red: #8B0000;
+    --red-light: #C20020;
+    --gold: #D4AF37;    
     --gold-light: #E8D5A3;
-    --cream: #FDF8F0;
+    --cream: #FDF8F0; 
     --cream-dark: #F5ECD7;
     --text-dark: #2C1810;
     --text-mid: #5C3D2E;
@@ -37,7 +37,7 @@
     top: 0; left: 0; right: 0;
     z-index: 1000;
     background: var(--white);
-    border-bottom: 2px solid var(--red);
+    border-bottom: 2px solid var(--red-light);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -47,10 +47,28 @@
   }
 
   .nav-logo {
-    font-family: 'Great Vibes', cursive;
-    font-size: 1.6rem;
-    color: var(--red);
-    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Khoảng cách giữa icon và chữ, có thể tinh chỉnh lại */
+    text-decoration: none; /* Xóa gạch chân mặc định của thẻ <a> */
+  }
+
+  /* Định dạng cho ảnh Logoicon.png */
+  .nav-logo img {
+    height: 32px; /* Set chiều cao bằng với line-height của chữ trên Figma */
+    width: auto;
+    object-fit: contain;
+  }
+
+  /* Định dạng Typography chuẩn theo Figma */
+  .nav-logo span {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600; /* SemiBold */
+    font-style: italic; /* Italic */
+    font-size: 24px; /* Kích thước chữ theo Figma */
+    line-height: 32px;
+    color: var(--red-light); /* Sử dụng biến màu đỏ chung của hệ thống */
+    letter-spacing: 0;
   }
 
   .nav-links {
@@ -69,10 +87,10 @@
     transition: color 0.2s;
   }
 
-  .nav-links a:hover { color: var(--red); }
+  .nav-links a:hover { color: var(--red-light); }
 
   .nav-btn {
-    background: var(--red);
+    background: var(--red-light);
     color: var(--white) !important;
     padding: 8px 20px;
     border-radius: 3px;
@@ -128,7 +146,7 @@
 
   .hero-snowflake {
     font-size: 1.2rem;
-    color: var(--red);
+    color: var(--red-light);
     margin: 20px auto 0;
     display: block;
     letter-spacing: 4px;
@@ -137,7 +155,7 @@
   .hero-names {
     font-family: 'Great Vibes', cursive;
     font-size: clamp(3rem, 7vw, 5.5rem);
-    color: var(--red);
+    color: var(--red-light);
     line-height: 1.1;
     margin: 10px 0 5px;
     text-shadow: 1px 2px 8px rgba(155,28,46,0.1);
@@ -182,7 +200,7 @@
     opacity: 0.7;
   }
 
-  .hero-divider-dot { width: 6px; height: 6px; background: var(--red); border-radius: 50%; }
+  .hero-divider-dot { width: 6px; height: 6px; background: var(--red-light); border-radius: 50%; }
 
   .hero-deco-bottom {
     display: flex;
@@ -202,7 +220,7 @@
   }
 
   .countdown-box {
-    border: 2px solid var(--red);
+    border: 2px solid var(--red-light);
     max-width: 540px;
     margin: 0 auto;
     padding: 24px 30px 28px;
@@ -218,7 +236,7 @@
     margin-bottom: 20px;
   }
 
-  .countdown-title span { color: var(--red); }
+  .countdown-title span { color: var(--red-light); }
 
   .countdown-grid {
     display: flex;
@@ -233,7 +251,7 @@
   }
 
   .countdown-num {
-    background: var(--red);
+    background: var(--red-light);
     color: var(--white);
     font-family: 'Cormorant Garamond', serif;
     font-size: 2.6rem;
@@ -263,12 +281,14 @@
   }
 
   .section-title {
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 3px;
+    font-family: 'Noto Serif', serif; /* Gán chính xác font Noto Serif */
+    font-size: 1.3rem; /* Điều chỉnh size cho phù hợp với font mới */
+    font-weight: 700;  /* Bold */
+    font-style: italic; /* Italic */
+    letter-spacing: 2px;
     text-transform: uppercase;
-    color: var(--red);
-    margin-bottom: 28px;
+    color: var(--red-light);
+    margin-bottom: 46px;
   }
 
   .gallery-grid {
@@ -315,7 +335,7 @@
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
     font-size: 1.05rem;
-    color: var(--red);
+    color: var(--gold);
     margin: 0 auto;
     max-width: 500px;
     line-height: 1.6;
@@ -347,7 +367,7 @@
     font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: var(--red);
+    color: var(--red-light);
     margin-bottom: 10px;
     padding-bottom: 8px;
     border-bottom: 1px solid var(--gold-light);
@@ -363,7 +383,7 @@
 
   .family-address {
     font-size: 0.68rem;
-    color: var(--text-mid);
+    color: var(--red-light);
     margin-top: 6px;
     line-height: 1.6;
   }
@@ -384,9 +404,11 @@
   }
 
   .program-title {
-    font-family: 'Great Vibes', cursive;
-    font-size: 2.2rem;
-    color: var(--red);
+    font-family: 'program-title', Serif;
+    font-style: bold;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--red-light);
     margin-bottom: 28px;
   }
 
@@ -416,7 +438,7 @@
     font-family: 'Cormorant Garamond', serif;
     font-size: 1rem;
     font-weight: 600;
-    color: var(--text-dark);
+    color: var(--red-light);
   }
 
   .program-event-desc {
@@ -1028,7 +1050,10 @@
 
 <!-- NAVBAR -->
 <nav>
-  <div class="nav-logo">L &amp; Y</div>
+  <a href="#hero" class="nav-logo">
+    <img src="LogoIcon.png" alt="Wedding Logo">
+    <span>L & Y</span>
+  </a>
   <ul class="nav-links">
     <li><a href="#hero">Trang Chủ</a></li>
     <li><a href="#gallery">Gia Đình</a></li>
@@ -1133,7 +1158,7 @@
 <!-- PROGRAM -->
 <section id="program">
   <div class="program-box fade-in">
-    <div class="program-title">Chương Trình Lễ Cưới</div>
+    <div class="program-title">CHƯƠNG TRÌNH LỄ CƯỚI</div>
     <ul class="program-list">
       <li class="program-item">
         <div class="program-event">
@@ -1173,7 +1198,7 @@
 
 <!-- VENUE -->
 <section id="venue">
-  <p class="section-title fade-in">Địa Điểm Tổ Chức</p>
+  <!-- <p class="section-title fade-in">Địa Điểm Tổ Chức</p> -->
   <div class="venue-title fade-in">Địa Điểm Tổ Chức</div>
   <div class="venue-divider fade-in"><div class="hero-divider-dot"></div></div>
   <div class="venue-grid fade-in">
