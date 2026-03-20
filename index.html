@@ -388,76 +388,114 @@
     line-height: 1.6;
   }
 
-  /* ===== PROGRAM ===== */
+  /* ===== PROGRAM TIMELINE ===== */
   #program {
-    background: var(--cream-dark);
-    padding: 50px 20px;
+    background: var(--white); /* Đổi màu nền trùng với ảnh nếu cần, hoặc giữ var(--cream-dark) */
+    padding: 60px 20px;
     text-align: center;
   }
 
   .program-box {
-    max-width: 580px;
+    max-width: 700px;
     margin: 0 auto;
-    border: 1.5px solid rgba(155,28,46,0.25);
-    background: rgba(255,255,255,0.6);
-    padding: 36px 40px;
+    border: 2px solid var(--red);
+    background: var(--white);
+    padding: 50px 30px; /* Tăng padding để có không gian thở giống thiết kế */
   }
 
   .program-title {
-    font-family: 'program-title', Serif;
-    font-style: bold;
-    font-weight: 700;
-    font-size: 1.3rem;
+    font-family: 'Noto Serif', serif;
+    font-size: 2.2rem;
     color: var(--red-light);
-    margin-bottom: 28px;
+    margin-bottom: 50px;
   }
 
   .program-list {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 0;
+    position: relative;
+    padding: 0;
+    margin: 0;
   }
 
+  /* Trục dọc trung tâm */
+  .program-list::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1.5px;
+    background: rgba(194, 0, 26, 0.2);
+    z-index: 1;
+  }
+
+  /* Reset lại Grid và ép xóa viền ngang cũ */
   .program-item {
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: 1fr 40px 1fr;
     align-items: center;
-    gap: 16px;
-    padding: 14px 0;
-    border-bottom: 1px solid var(--gold-light);
+    position: relative;
+    z-index: 2;
+    min-height: 90px;
+    border-bottom: none !important; /* Triệt tiêu đường kẻ vàng dính từ code cũ */
+    padding: 0 !important;
   }
 
-  .program-item:last-child { border-bottom: none; }
+  /* Chấm tròn mốc thời gian chuẩn 100% Figma */
+  .program-dot {
+    width: 6px; /* Kích thước chấm đỏ ở giữa */
+    height: 6px;
+    background: var(--red-light); /* Màu đỏ tươi cho chấm chính tâm */
+    border-radius: 50%;
+    margin: 0 auto;
+    position: relative;
+    z-index: 3;
+    /* Dùng multiple box-shadow để tạo nhiều vòng bao quanh:
+       - Lớp 1: Vòng màu trắng dày 4px
+       - Lớp 2: Vòng màu hồng mờ dày 12px */
+    box-shadow: 
+      0 0 0 3px var(--white), 
+      0 0 0 6px rgba(194, 0, 26, 0.15);
+  }
 
-  .program-event {
+  .program-left {
     text-align: right;
+    padding-right: 25px;
+  }
+  
+  .program-right {
+    text-align: left;
+    padding-left: 25px;
   }
 
-  .program-event-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem;
-    font-weight: 600;
+  /* Typography đồng bộ Noto Serif */
+  .program-time {
+    font-family: 'Noto Serif', serif;
+    font-size: 1.0rem;
+    font-weight: 700;
     color: var(--red-light);
   }
 
-  .program-event-desc {
-    font-size: 0.65rem;
-    color: var(--text-mid);
-    margin-top: 2px;
-    font-style: italic;
-  }
-
-  .program-time {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
+  .program-event-name {
+    font-family: 'Noto Serif', serif;
+    font-size: 1.0rem;
     font-weight: 600;
-    color: var(--red);
-    white-space: nowrap;
-    letter-spacing: 1px;
+    color: var(--red-light);
+    margin-bottom: 4px;
   }
 
-  .program-info { text-align: left; }
+  .program-event-desc {
+    font-size: 0.75rem;
+    color: var(--text-mid);
+  }
+
+  @media (max-width: 640px) {
+    .program-left { padding-right: 15px; }
+    .program-right { padding-left: 15px; }
+  }
 
   /* ===== VENUE ===== */
   #venue {
@@ -517,7 +555,7 @@
     font-family: 'Cormorant Garamond', serif;
     font-size: 1.05rem;
     font-weight: 600;
-    color: var(--text-dark);
+    color: var(--red-light);
     margin-bottom: 3px;
   }
 
@@ -526,13 +564,14 @@
     color: var(--text-mid);
     font-weight: 500;
     letter-spacing: 0.5px;
+    margin-left: 8px;
   }
 
   .venue-card-desc {
     font-size: 0.72rem;
-    color: var(--text-mid);
-    margin-top: 10px;
+    color: var(black  );
     line-height: 1.6;
+    margin-left: 8px;
   }
 
   .venue-card-link {
@@ -1134,6 +1173,7 @@
     /* Đảm bảo padding và border không làm khối to hơn mong muốn */
     box-sizing: border-box; 
   }
+  
 </style>
 </head>
 <body>
@@ -1248,40 +1288,53 @@
 <!-- PROGRAM -->
 <section id="program">
   <div class="program-box fade-in">
-    <div class="program-title">CHƯƠNG TRÌNH LỄ CƯỚI</div>
+    <div class="program-title">Chương Trình Lễ Cưới</div>
     <ul class="program-list">
+      
       <li class="program-item">
-        <div class="program-event">
+        <div class="program-left">
           <div class="program-event-name">Lễ Vu Quy</div>
-          <div class="program-event-desc">Tại tư gia nhà gái (15/04/2026)</div>
+          <div class="program-event-desc">Tại tư gia nhà gái (10/04/2026)</div>
         </div>
-        <div class="program-time">10:00</div>
-        <div class="program-info"></div>
+        <div class="program-dot"></div>
+        <div class="program-right">
+          <div class="program-time">10:00</div>
+        </div>
       </li>
+
       <li class="program-item">
-        <div class="program-event"></div>
-        <div class="program-time">10:00</div>
-        <div class="program-info">
-          <div class="program-event-name">Lễ Thành Hôn</div>
-          <div class="program-event-desc">Nghi lễ gia tiên nhà trai (16/04/2026)</div>
+        <div class="program-left">
+          <div class="program-time">10:30</div>
+        </div>
+        <div class="program-dot"></div>
+        <div class="program-right">
+          <div class="program-event-name">Đón Dâu</div>
+          <div class="program-event-desc">Lễ rước dâu về nhà trai</div>
         </div>
       </li>
-      <!-- <li class="program-item">
-        <div class="program-event">
+
+      <li class="program-item">
+        <div class="program-left">
           <div class="program-event-name">Lễ Thành Hôn</div>
           <div class="program-event-desc">Nghi lễ gia tiên nhà trai (16/04/2026)</div>
         </div>
-        <div class="program-time">10:00</div>
-        <div class="program-info"></div>
-      </li> -->
-      <!-- <li class="program-item">
-        <div class="program-event"></div>
-        <div class="program-time">18:00</div>
-        <div class="program-info">
+        <div class="program-dot"></div>
+        <div class="program-right">
+          <div class="program-time">11:30</div>
+        </div>
+      </li>
+
+      <li class="program-item">
+        <div class="program-left">
+          <div class="program-time">18:00</div>
+        </div>
+        <div class="program-dot"></div>
+        <div class="program-right">
           <div class="program-event-name">Tiệc Cưới</div>
           <div class="program-event-desc">Đãi tiệc tại nhà hàng</div>
         </div>
-      </li> -->
+      </li>
+
     </ul>
   </div>
 </section>
@@ -1293,25 +1346,25 @@
   <div class="venue-divider fade-in"><div class="hero-divider-dot"></div></div>
   <div class="venue-grid fade-in">
     <div class="venue-card">
-      <div class="venue-card-icon">📍</div>
-      <div class="venue-card-name">Lễ Thành Hôn</div>
-      <div class="venue-card-sub">tổ 12, ấp Tân Thạnh 2</div>
-      <div class="venue-card-desc">xã Phú Hựu, tỉnh Đồng Tháp</div>
+      <div class="venue-card-icon"></div>
+      <div class="venue-card-name">📍 Lễ Thành Hôn</div>
+      <div class="venue-card-sub">Tổ 12, ấp Tân Thạnh 2</div>
+      <div class="venue-card-desc">Xã Phú Hựu, tỉnh Đồng Tháp</div>
       <div class="map-buttons">
         <a href="https://www.google.com/maps/search/?api=1&query=tổ+12+ấp+Tân+Thạnh+2+xã+Phú+Hựu+Đồng+Tháp" 
-          target="_blank" class="btn-map">Xem bản đồ</a>
+          target="_blank" class="btn-map">Xem bản đồ</a> <br>
         <a href="https://www.google.com/maps/dir/?api=1&destination=tổ+12+ấp+Tân+Thạnh+2+xã+Phú+Hựu+Đồng+Tháp" 
           target="_blank" class="btn-direction">Bản đồ chỉ dẫn</a>
       </div>
     </div>
     <div class="venue-card">
-      <div class="venue-card-icon">📍</div>
-      <div class="venue-card-name">Lễ Vu Quy</div>
+      <div class="venue-card-icon"></div>
+      <div class="venue-card-name">📍 Lễ Vu Quy</div>
       <div class="venue-card-sub">Tổ 11, ấp An Ninh</div>
-      <div class="venue-card-desc">xã Tân Thuận Đông(Anh Khách cũ), tỉnh Đồng Tháp</div>
+      <div class="venue-card-desc">Xã Tân Thuận Đông(Anh Khách cũ), tỉnh Đồng Tháp</div>
       <div class="map-buttons">
           <a href="https://www.google.com/maps/search/?api=1&query=Tổ+11+ấp+An+Ninh+xã+Tân+Thuận+Đông+Đồng+Tháp" 
-            target="_blank" class="btn-map">Xem bản đồ</a>
+            target="_blank" class="btn-map">Xem bản đồ</a> <br>
           <a href="https://www.google.com/maps/dir/?api=1&destination=Tổ+11+ấp+An+Ninh+xã+Tân+Thuận+Đông+Đồng+Tháp" 
             target="_blank" class="btn-direction">Bản đồ chỉ dẫn</a>
         </div>
