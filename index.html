@@ -1443,8 +1443,7 @@
 </div><!-- /envelope-overlay -->
 
 <!-- CLOUD TRANSITION OVERLAY -->
-<!-- CLOUD TRANSITION OVERLAY -->
-<div id="cloud-overlay">
+<!-- <div id="cloud-overlay">
   <div class="cloud-bg"></div>
   <div class="cloud-half-left">
     <img src="cloud.png" alt="">
@@ -1452,7 +1451,7 @@
   <div class="cloud-half-right">
     <img src="cloud.png" alt="">
   </div>
-</div>
+</div> -->
 
 <!-- NAVBAR -->
 <nav>
@@ -1873,47 +1872,35 @@
 })();
 
 function openEnvelope() {
-  const overlay      = document.getElementById('envelope-overlay');
-  const cloudOverlay = document.getElementById('cloud-overlay');
+  const overlay = document.getElementById('envelope-overlay');
 
-  /* 1. Hiện mây che màn hình */
-  cloudOverlay.classList.add('visible');
-
-  /* 2. Phong bì bắt đầu đóng */
+  /* 1. Phong bì bắt đầu đóng */
   setTimeout(() => {
     overlay.classList.add('opening');
-  }, 400);
+  }, 300);
 
-  /* 3. Phong bì biến mất, scroll được */
+  /* 2. Phong bì biến mất, scroll được */
   setTimeout(() => {
     overlay.classList.add('gone');
     document.body.style.overflow = '';
   }, 800);
 
-  /* 4. Mây kéo ra 2 bên */
-  setTimeout(() => {
-    cloudOverlay.classList.add('opening');
-  }, 1200);
-
-  /* 5. Mây tan xong — bắt đầu hero animation */
+  /* 3. Bắt đầu hero animation */
   setTimeout(() => {
     const heroInner = document.querySelector('.hero-inner');
     if (heroInner) {
-      /* Bỏ trạng thái chờ */
       heroInner.classList.remove('hero-waiting');
-      /* Thêm class animate cho từng phần tử */
       heroInner.querySelectorAll(
         '.hero-ornament, .hero-photo-wrap, .hero-names-wrap, ' +
         '.hero-divider-line, .hero-date-wrap, .hero-location'
       ).forEach(el => el.classList.add('hero-animate'));
     }
-  }, 3000);
+  }, 1400);
 
-  /* 6. Dọn sạch overlay */
+  /* 4. Dọn sạch overlay */
   setTimeout(() => {
     overlay.remove();
-    cloudOverlay.classList.add('done');
-  }, 3200);
+  }, 2000);
 }
 
 document.body.style.overflow = 'hidden';
