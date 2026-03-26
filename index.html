@@ -839,6 +839,78 @@
   .fp-parents { font-size: 0.52rem; }
 }
 
+/* ===== 3 ẢNH KHOẢNH KHẮC ===== */
+.fp-moments {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: 700px;
+  margin: 0 auto 16px;
+  padding: 0 16px;
+}
+.fp-moment-item {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+  box-shadow: 0 6px 24px rgba(139,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
+  aspect-ratio: 3/4;
+  background: #e8ddd3;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.fp-moment-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(212,175,55,0.25);
+  border-radius: 2px;
+  pointer-events: none;
+}
+.fp-moment-item:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 16px 40px rgba(139,0,0,0.16), 0 2px 8px rgba(0,0,0,0.08);
+}
+.fp-moment-item img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center top;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.fp-moment-item:hover img { transform: scale(1.06); }
+
+/* Shimmer overlay lãng mạn */
+.fp-moment-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(255,255,255,0.07) 0%,
+    transparent 50%,
+    rgba(139,0,0,0.04) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Slide up animation */
+.fp-moment-slide-up {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 1.1s ease, transform 1.1s cubic-bezier(0.22,1,0.36,1);
+}
+.fp-moment-slide-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .fp-moments { gap: 7px; padding: 0 10px; }
+  .fp-moment-item:nth-child(2) { margin-top: -18px !important; }
+}
+
 </style>
 </head>
 <body>
@@ -1086,6 +1158,24 @@
 <!-- FAMILY PORTRAIT -->
 <section id="family-portrait">
   <p class="fp-section-title fade-in">Khoảnh Khắc Tình Yêu</p>
+
+  <!-- 3 ẢNH KHOẢNH KHẮC -->
+  <div class="fp-moments fade-in">
+    <div class="fp-moment-item fp-moment-slide-up" style="transition-delay:0s">
+      <img src="images/anhcuoi1.jpg" alt="Khoảnh khắc 1">
+    </div>
+    <div class="fp-moment-item fp-moment-slide-up" style="transition-delay:0.18s; margin-top: -28px;">
+      <img src="images/anhcuoi2.jpg" alt="Khoảnh khắc 2">
+    </div>
+    <div class="fp-moment-item fp-moment-slide-up" style="transition-delay:0.36s">
+      <img src="images/anhcuoi3.jpg" alt="Khoảnh khắc 3">
+    </div>
+  </div>
+
+  <!-- Quote -->
+  <div class="fp-quote-wrap fade-in" style="margin-bottom: 44px;">
+    <p class="fp-quote">'Tình yêu không phải là nhìn nhau, mà là cùng nhìn về một hướng.'</p>
+  </div>
 
   <div class="fp-stage">
 
@@ -1379,6 +1469,18 @@ const slideObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.15 });
 slideEls.forEach(el => slideObserver.observe(el));
+
+/* Slide-up cho 3 ảnh khoảnh khắc */
+const momentEls = document.querySelectorAll('.fp-moment-slide-up');
+const momentObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      momentObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+momentEls.forEach(el => momentObserver.observe(el));
 
 /* RSVP Submit */
 async function submitRSVP() {
