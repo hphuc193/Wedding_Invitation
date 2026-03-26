@@ -1521,6 +1521,118 @@
   border-top: 1px solid rgba(212,175,55,0.2);
   padding-top: 14px;
 }
+/* ===== PHOTO STRIP NGHIÊNG ===== */
+.photo-strip-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 0 50px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+}
+.photo-item {
+  position: relative;
+  flex-shrink: 0;
+  transition: transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s ease;
+  cursor: pointer;
+}
+.photo-item:hover { z-index: 10 !important; }
+
+.photo-item:nth-child(1) { transform: rotate(-3deg) translateY(6px);   z-index:2; margin-right:-18px; }
+.photo-item:nth-child(2) { transform: rotate(2deg)  translateY(-8px);  z-index:4; margin-right:-14px; }
+.photo-item:nth-child(3) { transform: rotate(-1deg) translateY(-3px);  z-index:5; margin-right:-14px; }
+.photo-item:nth-child(4) { transform: rotate(2.5deg) translateY(4px);  z-index:3; margin-right:-18px; }
+.photo-item:nth-child(5) { transform: rotate(-2.5deg) translateY(7px); z-index:2; }
+
+.photo-item:nth-child(1):hover { transform: rotate(-3deg)   translateY(-4px) scale(1.03); }
+.photo-item:nth-child(2):hover { transform: rotate(2deg)    translateY(-14px) scale(1.03); }
+.photo-item:nth-child(3):hover { transform: rotate(-1deg)   translateY(-12px) scale(1.03); }
+.photo-item:nth-child(4):hover { transform: rotate(2.5deg)  translateY(-4px) scale(1.03); }
+.photo-item:nth-child(5):hover { transform: rotate(-2.5deg) translateY(-2px) scale(1.03); }
+
+.photo-inner {
+  background: #fff;
+  padding: 8px 8px 28px 8px;
+  position: relative;
+  box-shadow:
+    0 8px 32px rgba(139,0,0,0.18),
+    0 2px 8px rgba(0,0,0,0.12);
+}
+.photo-inner::after {
+  content: '';
+  position: absolute;
+  top: 8px; left: 8px; right: 8px; bottom: 28px;
+  border: 1px solid rgba(212,175,55,0.3);
+  pointer-events: none;
+}
+.photo-item:nth-child(1) .photo-inner,
+.photo-item:nth-child(5) .photo-inner { width: 110px; }
+
+.photo-item:nth-child(2) .photo-inner,
+.photo-item:nth-child(4) .photo-inner { width: 128px; }
+
+.photo-item:nth-child(3) .photo-inner  { width: 148px; }
+
+.photo-img {
+  display: block;
+  object-fit: cover;
+  object-position: top center;
+}
+.photo-item:nth-child(1) .photo-img,
+.photo-item:nth-child(5) .photo-img { width: 110px; height: 148px; }
+
+.photo-item:nth-child(2) .photo-img,
+.photo-item:nth-child(4) .photo-img { width: 128px; height: 172px; }
+
+.photo-item:nth-child(3) .photo-img  { width: 148px; height: 198px; }
+
+.photo-caption {
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.55rem;
+  color: #9B7B5B;
+  margin-top: 5px;
+  letter-spacing: 0.5px;
+}
+.photo-strip-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: #C8A84B;
+  text-align: center;
+  margin-top: 8px;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 480px) {
+  .photo-item:nth-child(1) .photo-inner,
+  .photo-item:nth-child(5) .photo-inner { width: 72px; }
+  .photo-item:nth-child(1) .photo-img,
+  .photo-item:nth-child(5) .photo-img   { width: 72px; height: 96px; }
+  .photo-item:nth-child(2) .photo-inner,
+  .photo-item:nth-child(4) .photo-inner { width: 84px; }
+  .photo-item:nth-child(2) .photo-img,
+  .photo-item:nth-child(4) .photo-img   { width: 84px; height: 112px; }
+  .photo-item:nth-child(3) .photo-inner { width: 96px; }
+  .photo-item:nth-child(3) .photo-img   { width: 96px; height: 128px; }
+  .photo-item:nth-child(1) { margin-right: -10px; }
+  .photo-item:nth-child(2) { margin-right: -8px; }
+  .photo-item:nth-child(3) { margin-right: -8px; }
+  .photo-item:nth-child(4) { margin-right: -10px; }
+}
+
+.photo-strip-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 16px 50px; /* thêm padding 2 bên 16px */
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
 </style>
 </head>
 <body>
@@ -1899,6 +2011,8 @@
   </div>
 </section>
 
+
+
 <!-- PROGRAM -->
 <section id="program">
   <div class="program-box fade-in">
@@ -1907,7 +2021,7 @@
       <li class="program-item">
         <div class="program-left">
           <div class="program-event-name">Lễ Vu Quy</div>
-          <div class="program-event-desc">Tại tư gia nhà gái (10/04/2026)</div>
+          <div class="program-event-desc">Tại tư gia nhà gái (15/04/2026)</div>
         </div>
         <div class="program-dot"></div>
         <div class="program-right">
@@ -1961,7 +2075,52 @@
     <a href="https://maps.app.goo.gl/zt2nCq4Y4oJiD1jw8" target="_blank" class="map-btn">NHÀ GÁI · CHỈ ĐƯỜNG</a>
   </div>
 </section>
+<!-- PHOTO STRIP NGHIÊNG -->
+<section style="background:var(--cream);padding:50px 0 60px;text-align:center;">
+  <p class="section-title fade-in" style="text-align:center;">Khoảnh Khắc Tình Yêu</p>
+  <div class="photo-strip-clip">
+  <div class="photo-strip-wrap fade-in">
 
+    <div class="photo-item">
+      <div class="photo-inner">
+        <img class="photo-img" src="images/anhcuoi6.jpg" alt="Khoảnh khắc 6">
+        <div class="photo-caption">L &amp; Y</div>
+      </div>
+    </div>
+
+    <div class="photo-item">
+      <div class="photo-inner">
+        <img class="photo-img" src="images/anhcuoi10.jpg" alt="Khoảnh khắc 7">
+        <div class="photo-caption">L &amp; Y</div>
+      </div>
+    </div>
+
+    <div class="photo-item">
+      <div class="photo-inner">
+        <img class="photo-img" src="images/anhcuoi8.jpg" alt="Khoảnh khắc 8">
+        <div class="photo-caption">L &amp; Y</div>
+      </div>
+    </div>
+
+    <div class="photo-item">
+      <div class="photo-inner">
+        <img class="photo-img" src="images/anhcuoi9.jpg" alt="Khoảnh khắc 9">
+        <div class="photo-caption">L &amp; Y</div>
+      </div>
+    </div>
+
+    <div class="photo-item">
+      <div class="photo-inner">
+        <img class="photo-img" src="images/anhcuoi7.jpg" alt="Khoảnh khắc 10">
+        <div class="photo-caption">L &amp; Y</div>
+      </div>
+    </div>
+
+  </div>
+  </div>
+
+  <p class="photo-strip-quote fade-in">"Mỗi khoảnh khắc bên nhau đều là một món quà."</p>
+</section>
 <!-- DRESS CODE -->
 <section id="dresscode">
   <p class="section-title fade-in">TRANG PHỤC</p>
