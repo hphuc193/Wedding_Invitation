@@ -62,7 +62,6 @@
     font-weight: 600 !important; letter-spacing: 1.5px;
   }
 
-  /* ===== HERO ===== */
 /* ===== HERO ===== */
 #hero {
   padding-top: 56px;
@@ -86,7 +85,6 @@
   pointer-events: none;
 }
 
-/* Viền vàng bao ngoài */
 #hero::after {
   content: '';
   position: absolute;
@@ -122,49 +120,113 @@
   gap: 0;
 }
 
-/* Dòng hoa văn trên */
+/* Trạng thái chờ — ẩn hết trước khi mở thiệp */
+.hero-inner.hero-waiting * {
+  animation-play-state: paused !important;
+  opacity: 0 !important;
+}
+
+/* Hoa văn trên */
 .hero-ornament {
   font-size: 0.75rem;
   color: var(--gold);
   letter-spacing: 8px;
   margin-bottom: 18px;
   opacity: 0;
-  animation: heroFadeDown 1s ease 0.1s forwards;
+}
+.hero-ornament.hero-animate {
+  animation: heroFadeDown 1.2s ease 0.2s forwards;
 }
 
-/* Tên cô dâu chú rể */
+/* Ảnh cưới */
+.hero-photo-wrap {
+  width: min(72vw, 300px);
+  position: relative;
+  opacity: 0;
+  margin-bottom: 24px;
+}
+.hero-photo-wrap.hero-animate {
+  animation: heroScaleIn 1.6s cubic-bezier(0.22,1,0.36,1) 0.5s forwards;
+}
+
+.hero-photo-frame {
+  width: 100%;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  position: relative;
+  box-shadow:
+    0 20px 60px rgba(139,0,0,0.22),
+    0 8px 24px rgba(0,0,0,0.14),
+    0 2px 8px rgba(0,0,0,0.08);
+}
+.hero-photo-frame img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: transform 8s ease;
+}
+#hero:hover .hero-photo-frame img { transform: scale(1.03); }
+
+.hero-photo-frame::before {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(212,175,55,0.45);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero-photo-dot {
+  position: absolute;
+  width: 9px; height: 9px;
+  background: var(--gold);
+  border-radius: 50%;
+  z-index: 3;
+  box-shadow: 0 0 0 3px var(--cream);
+}
+.hero-photo-dot.tl { top: -5px; left: -5px; }
+.hero-photo-dot.tr { top: -5px; right: -5px; }
+.hero-photo-dot.bl { bottom: -5px; left: -5px; }
+.hero-photo-dot.br { bottom: -5px; right: -5px; }
+
+/* Tên cô dâu chú rể — dưới ảnh */
 .hero-names-wrap {
   text-align: center;
-  margin-bottom: 6px;
+  margin-bottom: 14px;
   opacity: 0;
-  animation: heroFadeDown 1.1s ease 0.25s forwards;
+}
+.hero-names-wrap.hero-animate {
+  animation: heroFadeUp 1.2s ease 1.2s forwards;
 }
 .hero-name-groom, .hero-name-bride {
   font-family: 'Great Vibes', cursive;
-  font-size: clamp(3rem, 14vw, 5rem);
+  font-size: clamp(1.9rem, 8vw, 3rem);
   color: var(--red-light);
   line-height: 1.05;
   display: block;
-  text-shadow: 1px 2px 12px rgba(194,0,32,0.12);
+  text-shadow: 1px 2px 8px rgba(194,0,32,0.1);
 }
 .hero-name-amp {
   font-family: 'Great Vibes', cursive;
-  font-size: clamp(1.6rem, 7vw, 2.6rem);
+  font-size: clamp(1.1rem, 4vw, 1.7rem);
   color: var(--gold);
   display: block;
-  line-height: 1.1;
-  margin: 2px 0;
+  line-height: 1.15;
+  margin: 1px 0;
 }
 
-/* Đường kẻ vàng giữa */
+/* Divider */
 .hero-divider-line {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 20px 0;
+  margin: 14px 0;
   width: 100%;
   opacity: 0;
-  animation: heroFadeUp 1s ease 0.5s forwards;
+}
+.hero-divider-line.hero-animate {
+  animation: heroFadeUp 1s ease 1.5s forwards;
 }
 .hero-divider-line::before,
 .hero-divider-line::after {
@@ -188,95 +250,54 @@
   background: var(--gold);
 }
 
-/* Ảnh cưới */
-.hero-photo-wrap {
-  width: min(72vw, 300px);
-  position: relative;
-  opacity: 0;
-  animation: heroScaleIn 1.3s cubic-bezier(0.22,1,0.36,1) 0.4s forwards;
-  margin-bottom: 20px;
-}
-.hero-photo-frame {
-  width: 100%;
-  aspect-ratio: 3/4;
-  overflow: hidden;
-  position: relative;
-}
-.hero-photo-frame img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  object-position: top center;
-  display: block;
-  transition: transform 8s ease;
-}
-#hero:hover .hero-photo-frame img { transform: scale(1.03); }
-
-/* Khung trang trí quanh ảnh */
-.hero-photo-frame::before {
-  content: '';
-  position: absolute;
-  inset: 6px;
-  border: 1px solid rgba(212,175,55,0.5);
-  z-index: 2;
-  pointer-events: none;
-}
-/* Chấm 4 góc */
-.hero-photo-dot {
-  position: absolute;
-  width: 9px; height: 9px;
-  background: var(--gold);
-  border-radius: 50%;
-  z-index: 3;
-  box-shadow: 0 0 0 3px var(--cream);
-}
-.hero-photo-dot.tl { top: -5px; left: -5px; }
-.hero-photo-dot.tr { top: -5px; right: -5px; }
-.hero-photo-dot.bl { bottom: -5px; left: -5px; }
-.hero-photo-dot.br { bottom: -5px; right: -5px; }
-
 /* Ngày tháng */
 .hero-date-wrap {
   text-align: center;
   opacity: 0;
-  animation: heroFadeUp 1s ease 0.8s forwards;
   margin-bottom: 10px;
+}
+.hero-date-wrap.hero-animate {
+  animation: heroFadeUp 1.1s ease 1.7s forwards;
 }
 .hero-date-main {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(0.9rem, 3.5vw, 1.15rem);
+  font-size: clamp(0.88rem, 3.5vw, 1.1rem);
   font-weight: 600;
   letter-spacing: 3px;
   color: var(--text-dark);
-  line-height: 1.8;
+  line-height: 1.9;
 }
 .hero-date-sep {
   display: inline-block;
-  width: 20px; height: 1px;
+  width: 18px; height: 1px;
   background: var(--gold);
   vertical-align: middle;
   margin: 0 8px;
-  opacity: 0.6;
+  opacity: 0.55;
 }
 .hero-date-lunar {
-  font-size: clamp(0.6rem, 2vw, 0.72rem);
+  font-size: clamp(0.58rem, 2vw, 0.7rem);
   color: var(--red);
   letter-spacing: 0.5px;
-  margin-top: 4px;
+  margin-top: 3px;
   font-style: italic;
   font-family: 'Cormorant Garamond', serif;
+  opacity: 0.8;
 }
 
 /* Địa điểm */
 .hero-location {
   text-align: center;
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(0.68rem, 2.2vw, 0.82rem);
+  font-size: clamp(0.65rem, 2.2vw, 0.8rem);
   color: var(--text-mid);
   letter-spacing: 1.5px;
   font-style: italic;
   opacity: 0;
-  animation: heroFadeUp 1s ease 1s forwards;
   line-height: 1.7;
+}
+.hero-location.hero-animate {
+  animation: heroFadeUp 1.1s ease 1.9s forwards;
 }
 .hero-location strong {
   color: var(--red-light);
@@ -286,22 +307,22 @@
 
 /* ---- ANIMATIONS ---- */
 @keyframes heroFadeDown {
-  from { opacity: 0; transform: translateY(-20px); }
+  from { opacity: 0; transform: translateY(-18px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes heroFadeUp {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(18px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes heroScaleIn {
-  from { opacity: 0; transform: scale(0.93) translateY(16px); }
+  from { opacity: 0; transform: scale(0.92) translateY(20px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-/* ---- RESPONSIVE desktop ---- */
+/* Desktop */
 @media (min-width: 601px) {
   .hero-photo-wrap { width: min(55vw, 320px); }
-  .hero-name-groom, .hero-name-bride { font-size: clamp(3.5rem, 8vw, 5.5rem); }
+  .hero-name-groom, .hero-name-bride { font-size: clamp(2.2rem, 5vw, 3.2rem); }
 }
 
   /* ===== COUNTDOWN ===== */
@@ -1458,26 +1479,10 @@
     <div class="corner-bracket br"></div>
   </div>
 
-  <div class="hero-inner">
+  <div class="hero-inner hero-waiting">
 
-    <!-- Hoa văn trên -->
     <div class="hero-ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
 
-    <!-- Tên -->
-    <div class="hero-names-wrap">
-      <span class="hero-name-groom">Gia Luân</span>
-      <span class="hero-name-amp">&amp;</span>
-      <span class="hero-name-bride">Ngọc Yến</span>
-    </div>
-
-    <!-- Divider -->
-    <div class="hero-divider-line">
-      <div class="hero-divider-dot-wrap">
-        <span></span><span></span><span></span>
-      </div>
-    </div>
-
-    <!-- Ảnh cưới -->
     <div class="hero-photo-wrap">
       <div class="hero-photo-frame">
         <img src="images/anhcuoi.jpg" alt="Gia Luân & Ngọc Yến">
@@ -1488,19 +1493,27 @@
       </div>
     </div>
 
-    <!-- Ngày tháng -->
+    <div class="hero-names-wrap">
+      <span class="hero-name-groom">Gia Luân</span>
+      <span class="hero-name-amp">&amp;</span>
+      <span class="hero-name-bride">Ngọc Yến</span>
+    </div>
+
+    <div class="hero-divider-line">
+      <div class="hero-divider-dot-wrap">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+
     <div class="hero-date-wrap">
       <div class="hero-date-main">
         15 · 04 · 2026
         <span class="hero-date-sep"></span>
         16 · 04 · 2026
       </div>
-      <div class="hero-date-lunar">
-        (28 &amp; 29 tháng 2 năm Bính Ngọ)
-      </div>
+      <div class="hero-date-lunar">(28 &amp; 29 tháng 2 năm Bính Ngọ)</div>
     </div>
 
-    <!-- Địa điểm -->
     <div class="hero-location">
       <strong>Đồng Tháp</strong> · xã Phú Hựu &amp; xã Tân Thuận Đông
     </div>
@@ -1860,28 +1873,47 @@
 })();
 
 function openEnvelope() {
-  const overlay = document.getElementById('envelope-overlay');
+  const overlay      = document.getElementById('envelope-overlay');
   const cloudOverlay = document.getElementById('cloud-overlay');
 
-  /* 1. Mây hiện ra che màn hình (đã có sẵn — không cần thêm class) */
+  /* 1. Hiện mây che màn hình */
+  cloudOverlay.classList.add('visible');
 
-  /* 2. Sau 0.3s: bắt đầu đóng phong bì */
+  /* 2. Phong bì bắt đầu đóng */
   setTimeout(() => {
     overlay.classList.add('opening');
-  }, 300);
+  }, 400);
 
-  /* 3. Sau 1s: mây bắt đầu kéo ra 2 bên, lộ nội dung */
+  /* 3. Phong bì biến mất, scroll được */
   setTimeout(() => {
-    cloudOverlay.classList.add('opening');
     overlay.classList.add('gone');
     document.body.style.overflow = '';
-  }, 1000);
+  }, 800);
 
-  /* 4. Sau 2.8s: ẩn hoàn toàn cả 2 overlay */
+  /* 4. Mây kéo ra 2 bên */
+  setTimeout(() => {
+    cloudOverlay.classList.add('opening');
+  }, 1200);
+
+  /* 5. Mây tan xong — bắt đầu hero animation */
+  setTimeout(() => {
+    const heroInner = document.querySelector('.hero-inner');
+    if (heroInner) {
+      /* Bỏ trạng thái chờ */
+      heroInner.classList.remove('hero-waiting');
+      /* Thêm class animate cho từng phần tử */
+      heroInner.querySelectorAll(
+        '.hero-ornament, .hero-photo-wrap, .hero-names-wrap, ' +
+        '.hero-divider-line, .hero-date-wrap, .hero-location'
+      ).forEach(el => el.classList.add('hero-animate'));
+    }
+  }, 3000);
+
+  /* 6. Dọn sạch overlay */
   setTimeout(() => {
     overlay.remove();
     cloudOverlay.classList.add('done');
-  }, 2800);
+  }, 3200);
 }
 
 document.body.style.overflow = 'hidden';
