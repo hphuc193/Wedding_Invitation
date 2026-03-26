@@ -6,8 +6,7 @@
 <title>Gia Luân & Ngọc Yến</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-<style>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Great+Vibes&family=Italianno&family=Montserrat:wght@300;400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet"><style>
   :root {
     --red: #8B0000;
     --red-light: #C20020;
@@ -1466,18 +1465,24 @@
   margin-bottom: 8px;
 }
 .env-info-name {
-  font-family: 'Great Vibes', cursive;
-  font-size: clamp(1.5rem, 6vw, 2rem);
+  font-family: 'Italianno', cursive;
+  font-size: clamp(1.9rem, 7.5vw, 2.6rem); /* tăng size vì Italianno nhỏ hơn */
   color: #8B0000;
   line-height: 1.05;
-  text-shadow: 1px 1px 4px rgba(139,0,0,0.1);
+  text-shadow:
+    0.4px 0.4px 0 #8B0000,
+    0.8px 0.8px 0 rgba(139,0,0,0.3); /* giả in đậm */
 }
+
 .env-info-amp {
-  font-family: 'Great Vibes', cursive;
-  font-size: clamp(1rem, 4vw, 1.3rem);
+  font-family: 'Italianno', cursive;
+  font-size: clamp(1.2rem, 4.5vw, 1.6rem);
   color: #D4AF37;
   line-height: 1.1;
   margin: 1px 0;
+  text-shadow:
+    0.4px 0.4px 0 #D4AF37,
+    0.8px 0.8px 0 rgba(212,175,55,0.3);
 }
 .env-info-divider {
   display: flex; align-items: center; gap: 6px;
@@ -1615,7 +1620,7 @@
           <span class="env-info-name">Gia Luân</span>
           <span class="env-info-amp">&amp;</span>
           <span class="env-info-name">Ngọc Yến</span>
-        </div>
+        </div>  
         <div class="env-info-divider">
           <span></span><div class="env-info-dot"></div><span></span>
         </div>
@@ -1949,13 +1954,13 @@
   </div>
   <div class="venue-map fade-in">
     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.4946104862!2d106.69975927480647!3d10.773374089373635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f4b3330bcc7%3A0x4db964d76bf8ebc!2zTMOqIExG!5e0!3m2!1svi!2svn!4v1700000000000" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    <a href="https://maps.google.com" target="_blank" class="map-btn">BẢN ĐỒ CHỈ DẪN</a>
+    <a href="https://maps.app.goo.gl/zt2nCq4Y4oJiD1jw8?g_st=com.google.maps.preview.copy" target="_blank" class="map-btn">BẢN ĐỒ CHỈ DẪN</a>
   </div>
 </section>
 
 <!-- DRESS CODE -->
 <section id="dresscode">
-  <p class="section-title fade-in">QUY ĐỊNH TRANG PHỤC</p>
+  <p class="section-title fade-in">TRANG PHỤC</p>
   <p class="dresscode-subtitle fade-in">Để những bức hình kỷ niệm thêm phần đồng điệu, kính mong quý khách lựa chọn trang phục theo tông màu:</p>
   <div class="dresscode-colors fade-in">
     <div class="color-item"><div class="color-swatch" style="background:#9B1C2E;"></div><div class="color-name">Đỏ Truyền Thống</div></div>
