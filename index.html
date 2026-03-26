@@ -1526,16 +1526,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 30px 0 50px;
-  overflow: hidden;
+  padding: 40px 10px 60px; /* Tăng padding để có không gian cho ảnh nghiêng */
+  overflow: hidden; 
   width: 100%;
-  max-width: 100%;
+  box-sizing: border-box;
 }
-.photo-item {
+.photo-inner {
+  background: #fff;
+  padding: 8px 8px 32px 8px; /* Khoảng trắng đặc trưng của ảnh Polaroid */
   position: relative;
-  flex-shrink: 0;
-  transition: transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s ease;
-  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  /* Quan trọng: Cắt bỏ mọi phần thừa của ảnh lòi ra khỏi bo góc nếu có */
+  overflow: hidden; 
+  display: flex;
+  flex-direction: column;
 }
 .photo-item:hover { z-index: 10 !important; }
 
@@ -1562,9 +1566,13 @@
 .photo-inner::after {
   content: '';
   position: absolute;
-  top: 8px; left: 8px; right: 8px; bottom: 28px;
-  border: 1px solid rgba(212,175,55,0.3);
+  /* Căn chỉnh layer border khớp chính xác với padding */
+  top: 8px; left: 8px; right: 8px; 
+  /* Chừa phần khoảng trắng phía dưới để ghi caption */
+  bottom: 32px; 
+  border: 1px solid rgba(212,175,55,0.2);
   pointer-events: none;
+  z-index: 2;
 }
 .photo-item:nth-child(1) .photo-inner,
 .photo-item:nth-child(5) .photo-inner { width: 110px; }
@@ -1575,9 +1583,13 @@
 .photo-item:nth-child(3) .photo-inner  { width: 148px; }
 
 .photo-img {
+  width: 100% !important;
+  height: auto !important;
   display: block;
   object-fit: cover;
-  object-position: top center;
+  /* Đảm bảo ảnh luôn nằm dưới lớp border trang trí nội bộ */
+  position: relative;
+  z-index: 1;
 }
 .photo-item:nth-child(1) .photo-img,
 .photo-item:nth-child(5) .photo-img { width: 110px; height: 148px; }
@@ -2077,7 +2089,7 @@
 </section>
 <!-- PHOTO STRIP NGHIÊNG -->
 <section style="background:var(--cream);padding:50px 0 60px;text-align:center;">
-  <p class="section-title fade-in" style="text-align:center;">Khoảnh Khắc Tình Yêu</p>
+  <p class="section-title fade-in" style="text-align:center;">ALBUM</p>
   <div class="photo-strip-clip">
   <div class="photo-strip-wrap fade-in">
 
