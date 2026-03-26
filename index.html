@@ -668,6 +668,195 @@
 .cal-legend-item { display: flex; align-items: center; gap: 7px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.8rem; color: var(--text-mid); }
 .cal-legend-sep { width: 1px; height: 16px; background: rgba(212,175,55,0.4); }
 
+
+/* ===== FAMILY PORTRAIT SECTION ===== */
+#family-portrait {
+  background: var(--cream);
+  padding: 50px 0;
+  overflow: hidden;
+}
+.fp-section-title {
+  text-align: center;
+  font-family: 'Noto Serif', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--red-light);
+  margin-bottom: 40px;
+}
+
+/* Mỗi hàng: ảnh + thông tin */
+.fp-row {
+  display: flex;
+  max-width: 780px;
+  margin: 0 auto 0;
+  min-height: 340px;
+  overflow: hidden;
+}
+.fp-row + .fp-row {
+  margin-top: 0;
+}
+
+/* Ảnh */
+.fp-photo {
+  flex: 0 0 42%;
+  position: relative;
+  overflow: hidden;
+  background: #e8ddd3;
+}
+.fp-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: transform 0.6s ease;
+}
+.fp-photo:hover img { transform: scale(1.04); }
+
+/* Thông tin */
+.fp-info {
+  flex: 0 0 58%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 36px 36px 36px 40px;
+  background: var(--white);
+  position: relative;
+}
+.fp-row.reversed .fp-info {
+  padding: 36px 40px 36px 36px;
+  align-items: flex-end;
+  text-align: right;
+}
+
+/* Góc trang trí */
+.fp-info::before {
+  content: '';
+  position: absolute;
+  top: 16px; left: 16px;
+  width: 24px; height: 24px;
+  border-top: 1px solid var(--gold);
+  border-left: 1px solid var(--gold);
+  opacity: 0.6;
+}
+.fp-row.reversed .fp-info::before {
+  left: auto; right: 16px;
+  border-left: none;
+  border-right: 1px solid var(--gold);
+}
+.fp-info::after {
+  content: '';
+  position: absolute;
+  bottom: 16px; right: 16px;
+  width: 24px; height: 24px;
+  border-bottom: 1px solid var(--gold);
+  border-right: 1px solid var(--gold);
+  opacity: 0.6;
+}
+.fp-row.reversed .fp-info::after {
+  right: auto; left: 16px;
+  border-right: none;
+  border-left: 1px solid var(--gold);
+}
+
+.fp-tag {
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--red-light);
+  margin-bottom: 12px;
+}
+.fp-parents {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  line-height: 1.9;
+  letter-spacing: 0.3px;
+  margin-bottom: 4px;
+}
+.fp-parents span {
+  display: block;
+  font-weight: 400;
+  color: var(--text-mid);
+  font-size: 0.65rem;
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
+.fp-divider-small {
+  width: 36px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.6;
+  margin: 14px 0;
+}
+.fp-row.reversed .fp-divider-small { margin-left: auto; }
+.fp-role {
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-mid);
+  margin-bottom: 4px;
+}
+.fp-name-script {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.4rem;
+  color: var(--red-light);
+  line-height: 1.1;
+}
+
+/* Gallery quote */
+.fp-quote-wrap {
+  text-align: center;
+  padding: 36px 20px 10px;
+}
+.fp-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--gold);
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* ===== SLIDE-IN ANIMATION ===== */
+.slide-left {
+  opacity: 0;
+  transform: translateX(-70px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22,1,0.36,1);
+}
+.slide-right {
+  opacity: 0;
+  transform: translateX(70px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22,1,0.36,1);
+}
+.slide-left.visible, .slide-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+/* Delay cho ảnh và chữ lệch pha nhẹ */
+.fp-photo.slide-left  { transition-delay: 0s; }
+.fp-info.slide-right  { transition-delay: 0.15s; }
+.fp-photo.slide-right { transition-delay: 0s; }
+.fp-info.slide-left   { transition-delay: 0.15s; }
+
+/* Responsive */
+@media (max-width: 640px) {
+  .fp-row { flex-direction: column; min-height: auto; }
+  .fp-row.reversed { flex-direction: column-reverse; }
+  .fp-photo { flex: 0 0 280px; height: 280px; }
+  .fp-info { padding: 28px 24px !important; align-items: flex-start !important; text-align: left !important; }
+  .fp-row.reversed .fp-info::before { left: 16px; right: auto; border-left: 1px solid var(--gold); border-right: none; }
+  .fp-row.reversed .fp-info::after { right: 16px; left: auto; border-right: 1px solid var(--gold); border-left: none; }
+  .fp-row.reversed .fp-divider-small { margin-left: 0; }
+  .fp-name-script { font-size: 2rem; }
+}
+
 </style>
 </head>
 <body>
@@ -912,34 +1101,48 @@
   </div>
 </section>
 
-<!-- GALLERY -->
-<section id="gallery">
-  <p class="section-title fade-in">Khoảnh Khắc Tình Yêu</p>
-  <div class="gallery-grid fade-in">
-    <div class="gallery-item">
-      <img src="images/anhcuoi1.jpg" alt="Ảnh cưới 1" class="gallery-img">
+<!-- FAMILY PORTRAIT -->
+<section id="family-portrait">
+  <p class="fp-section-title fade-in">Khoảnh Khắc Tình Yêu</p>
+
+  <!-- HÀNG 1: Ảnh chú rể (trái) + Nhà Trai (phải) -->
+  <div class="fp-row">
+    <div class="fp-photo slide-left">
+      <img src="images/anhcuoi5.jpg" alt="Chú rể Gia Luân">
     </div>
-    <div class="gallery-item" style="margin-top:-20px;">
-      <img src="images/anhcuoi2.jpg" alt="Ảnh cưới 2" class="gallery-img">
-    </div>
-    <div class="gallery-item">
-      <img src="images/anhcuoi3.jpg" alt="Ảnh cưới 3" class="gallery-img">
+    <div class="fp-info slide-right">
+      <div class="fp-tag">✦ &nbsp; Nhà Trai &nbsp; ✦</div>
+      <div class="fp-parents">
+        Bà Trần Thị Thanh Hoàng
+        <span>Tổ 12, ấp Tân Thạnh 2, xã Phú Hựu, tỉnh Đồng Tháp</span>
+      </div>
+      <div class="fp-divider-small"></div>
+      <div class="fp-role">Chú Rể</div>
+      <div class="fp-name-script">Gia Luân</div>
     </div>
   </div>
-  <p class="gallery-quote fade-in">'Tình yêu không phải là nhìn nhau, mà là cùng nhìn về một hướng.'</p>
-  <div class="family-section fade-in">
-    <div class="family-card">
-      <div class="family-icon">🏮</div>
-      <div class="family-title">Nhà Trai</div>
-      <div class="family-name">Bà Trần Thị Thanh Hoàng</div>
-      <div class="family-address">Trú tại: tổ 12, ấp Tân Thạnh 2, xã Phú Hựu, tỉnh Đồng Tháp</div>
+
+  <!-- HÀNG 2: Nhà Gái (trái) + Ảnh cô dâu (phải) -->
+  <div class="fp-row reversed">
+    <div class="fp-info slide-left">
+      <div class="fp-tag">✦ &nbsp; Nhà Gái &nbsp; ✦</div>
+      <div class="fp-parents">
+        Ông Nguyễn Văn Hiền<br>
+        Bà Lê Thị Ngọc Sang
+        <span>Tổ 11, ấp An Ninh, xã Tân Thuận Đông (Anh Khách cũ), tỉnh Đồng Tháp</span>
+      </div>
+      <div class="fp-divider-small"></div>
+      <div class="fp-role">Cô Dâu</div>
+      <div class="fp-name-script">Ngọc Yến</div>
     </div>
-    <div class="family-card">
-      <div class="family-icon">🏮</div>
-      <div class="family-title">Nhà Gái</div>
-      <div class="family-name">Ông Nguyễn Văn Hiền<br>Bà Lê Thị Ngọc Sang</div>
-      <div class="family-address">Trú tại: Tổ 11, ấp An Ninh, xã Tân Thuận Đông (Anh Khách cũ), tỉnh Đồng Tháp</div>
+    <div class="fp-photo slide-right">
+      <img src="images/anhcuoi4.jpg" alt="Cô dâu Ngọc Yến">
     </div>
+  </div>
+
+  <!-- Quote -->
+  <div class="fp-quote-wrap fade-in">
+    <p class="fp-quote">'Tình yêu không phải là nhìn nhau, mà là cùng nhìn về một hướng.'</p>
   </div>
 </section>
 
@@ -1179,6 +1382,18 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.12 });
 fadeEls.forEach(el => observer.observe(el));
+
+/* Slide-in on scroll cho Family Portrait */
+const slideEls = document.querySelectorAll('.slide-left, .slide-right');
+const slideObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      slideObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+slideEls.forEach(el => slideObserver.observe(el));
 
 /* RSVP Submit */
 async function submitRSVP() {
