@@ -640,37 +640,33 @@
     90% { opacity: 0.5; }
     100% { transform: translateY(105vh) rotate(800deg) scale(0.5); opacity: 0; }
   }
-
-  /* ===== CALENDAR ===== */
-.cal-day {
-  aspect-ratio: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.78rem;
-  font-weight: 500;
-  color: var(--text-dark);
-  border-radius: 50%;
-  position: relative;
-  transition: background 0.2s;
+  
+  /* ===== SAVE THE DATE CALENDAR ===== */
+.cal-box {
+  max-width: 400px; margin: 0 auto;
+  background: var(--white); border: 1px solid rgba(194,0,32,0.18);
+  padding: 28px 24px 32px; position: relative;
+  box-shadow: 0 8px 40px rgba(139,0,0,0.07);
 }
-.cal-weekend {
-  color: var(--red-light);
-}
-.cal-heart {
-  font-weight: 700;
-  color: var(--red-light);
-  border: 1.5px solid var(--red-light);
-  border-radius: 50%;
-  background: rgba(194, 0, 32, 0.05);
-}
-.heart-icon {
-  font-size: 0.75rem;
-  color: var(--red-light);
-  line-height: 1;
-  animation: heartbeat 2s ease-in-out infinite;
-}
+.cal-box-corner-tr { position: absolute; top: 8px; right: 8px; width: 28px; height: 28px; border-top: 1.5px solid var(--gold); border-right: 1.5px solid var(--gold); opacity: 0.7; }
+.cal-box-corner-bl { position: absolute; bottom: 8px; left: 8px; width: 28px; height: 28px; border-bottom: 1.5px solid var(--gold); border-left: 1.5px solid var(--gold); opacity: 0.7; }
+.cal-box::before { content: ''; position: absolute; top: 8px; left: 8px; width: 28px; height: 28px; border-top: 1.5px solid var(--gold); border-left: 1.5px solid var(--gold); opacity: 0.7; }
+.cal-box::after  { content: ''; position: absolute; bottom: 8px; right: 8px; width: 28px; height: 28px; border-bottom: 1.5px solid var(--gold); border-right: 1.5px solid var(--gold); opacity: 0.7; }
+.cal-grid-header { display: grid; grid-template-columns: repeat(7,1fr); gap: 3px; margin-bottom: 4px; }
+.cal-dow { font-size: 0.58rem; font-weight: 700; letter-spacing: 1px; text-align: center; padding: 5px 0 7px; color: var(--text-mid); text-transform: uppercase; }
+.cal-dow.red { color: var(--red-light); }
+.cal-days-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 3px; }
+.cal-cell { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 500; color: var(--text-dark); }
+.cal-cell.weekend { color: var(--red-light); }
+.cal-cell.heart-day { color: var(--red); font-weight: 700; }
+.heart-svg-wrap { position: relative; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; }
+.heart-svg-wrap svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; animation: heartPulse 2.4s ease-in-out infinite; }
+.heart-day-b .heart-svg-wrap svg { animation-delay: 0.8s; }
+.heart-svg-wrap .day-num { position: relative; z-index: 2; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 600; color: var(--red); line-height: 1; }
+@keyframes heartPulse { 0%,100%{ transform: scale(1); opacity: 0.85; } 50%{ transform: scale(1.10); opacity: 1; } }
+.cal-legend { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 22px; padding-top: 18px; border-top: 1px solid rgba(212,175,55,0.25); }
+.cal-legend-item { display: flex; align-items: center; gap: 7px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.8rem; color: var(--text-mid); }
+.cal-legend-sep { width: 1px; height: 16px; background: rgba(212,175,55,0.4); }
 
 </style>
 </head>
@@ -851,77 +847,67 @@
 
 <!-- SAVE THE DATE CALENDAR -->
 <section id="save-date" style="background:var(--cream);padding:40px 20px;text-align:center;">
-  <p class="section-title fade-in" style="margin-bottom:8px;">SAVE THE DATE</p>
-  <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;letter-spacing:3px;color:var(--text-mid);margin-bottom:28px;" class="fade-in">THÁNG 4 · 2026</p>
+  <p class="section-title fade-in" style="margin-bottom:6px;">Save the Date</p>
+  <p class="fade-in" style="font-family:'Cormorant Garamond',serif;font-size:0.85rem;letter-spacing:5px;color:var(--text-mid);margin-bottom:24px;text-transform:uppercase;">Tháng 4 · 2026</p>
+  <div class="hero-divider fade-in" style="margin-bottom:26px;"><div class="hero-divider-dot"></div></div>
 
-  <div class="fade-in" style="max-width:420px;margin:0 auto;background:var(--white);border:1.5px solid var(--red-light);padding:28px 20px 32px;box-shadow:0 4px 24px rgba(139,0,0,0.08);">
-    
-    <!-- Header ngày trong tuần -->
-    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:10px;">
-      <!-- Thứ 2 đến Chủ nhật -->
-      <div style="font-size:0.6rem;font-weight:700;letter-spacing:1px;color:var(--red-light);text-align:center;padding:6px 0;">T2</div>
-      <div style="font-size:0.6rem;font-weight:700;letter-spacing:1px;color:var(--text-mid);text-align:center;padding:6px 0;">T3</div>
-      <div style="font-size:0.6rem;font-weight:700;letter-spacing:1px;color:var(--text-mid);text-align:center;padding:6px 0;">T4</div>
-      <div style="font-size:0.6rem;font-weight:700;letter-spacing:1px;color:var(--text-mid);text-align:center;padding:6px 0;">T5</div>
-      <div style="font-size:0.6rem;font-weight:700;letter-spacing:1px;color:var(--text-mid);text-align:center;padding:6px 0;">T6</div>
-      <div style="font-size:0.6rem;font-weight:700;letter-spacing:1px;color:var(--red-light);text-align:center;padding:6px 0;">T7</div>
-      <div style="font-size:0.6rem;font-weight:700;letter-spacing:1px;color:var(--red-light);text-align:center;padding:6px 0;">CN</div>
+  <div class="cal-box fade-in">
+    <div class="cal-box-corner-tr"></div>
+    <div class="cal-box-corner-bl"></div>
+
+    <div class="cal-grid-header">
+      <div class="cal-dow red">T2</div>
+      <div class="cal-dow">T3</div>
+      <div class="cal-dow">T4</div>
+      <div class="cal-dow">T5</div>
+      <div class="cal-dow">T6</div>
+      <div class="cal-dow red">T7</div>
+      <div class="cal-dow red">CN</div>
     </div>
 
-    <!-- Lưới ngày tháng 4/2026 -->
-    <!-- Tháng 4/2026 bắt đầu từ Thứ 4 (T4) -->
-    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;" id="cal-grid">
+    <div class="cal-days-grid">
+      <div class="cal-cell"></div><div class="cal-cell"></div>
+      <div class="cal-cell">1</div><div class="cal-cell">2</div><div class="cal-cell">3</div>
+      <div class="cal-cell weekend">4</div><div class="cal-cell weekend">5</div>
+      <div class="cal-cell">6</div><div class="cal-cell">7</div><div class="cal-cell">8</div>
+      <div class="cal-cell">9</div><div class="cal-cell">10</div>
+      <div class="cal-cell weekend">11</div><div class="cal-cell weekend">12</div>
+      <div class="cal-cell">13</div><div class="cal-cell">14</div>
 
-      <!-- Tuần 1: ô trống T2, T3 rồi 1→5 -->
-      <div></div><div></div> <!-- T2, T3 trống -->
-      <div class="cal-day">1</div>
-      <div class="cal-day">2</div>
-      <div class="cal-day">3</div>
-      <div class="cal-day cal-weekend">4</div>
-      <div class="cal-day cal-weekend">5</div>
+      <!-- NGÀY 15 — LỄTHÀNH HÔN -->
+      <div class="cal-cell heart-day">
+        <div class="heart-svg-wrap">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 34 C20 34 4 24 4 13.5 C4 9 7.5 6 11.5 6 C14.5 6 17 7.8 20 10.5 C23 7.8 25.5 6 28.5 6 C32.5 6 36 9 36 13.5 C36 24 20 34 20 34Z" stroke="#C20020" stroke-width="1.5" fill="rgba(194,0,32,0.06)"/>
+          </svg>
+          <span class="day-num">15</span>
+        </div>
+      </div>
 
-      <!-- Tuần 2: 6→12 -->
-      <div class="cal-day">6</div>
-      <div class="cal-day">7</div>
-      <div class="cal-day">8</div>
-      <div class="cal-day">9</div>
-      <div class="cal-day">10</div>
-      <div class="cal-day cal-weekend">11</div>
-      <div class="cal-day cal-weekend">12</div>
+      <!-- NGÀY 16 — LỄ VU QUY -->
+      <div class="cal-cell heart-day heart-day-b">
+        <div class="heart-svg-wrap">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 34 C20 34 4 24 4 13.5 C4 9 7.5 6 11.5 6 C14.5 6 17 7.8 20 10.5 C23 7.8 25.5 6 28.5 6 C32.5 6 36 9 36 13.5 C36 24 20 34 20 34Z" stroke="#C20020" stroke-width="1.5" fill="rgba(194,0,32,0.06)"/>
+          </svg>
+          <span class="day-num">16</span>
+        </div>
+      </div>
 
-      <!-- Tuần 3: 13→19 -->
-      <div class="cal-day">13</div>
-      <div class="cal-day">14</div>
-      <!-- NGÀY 15: Lễ Thành Hôn ❤️ -->
-      <div class="cal-day cal-heart">15<div class="heart-icon">♡</div></div>
-      <!-- NGÀY 16: Lễ Vu Quy ❤️ -->
-      <div class="cal-day cal-heart">16<div class="heart-icon">♡</div></div>
-      <div class="cal-day">17</div>
-      <div class="cal-day cal-weekend">18</div>
-      <div class="cal-day cal-weekend">19</div>
-
-      <!-- Tuần 4: 20→26 -->
-      <div class="cal-day">20</div>
-      <div class="cal-day">21</div>
-      <div class="cal-day">22</div>
-      <div class="cal-day">23</div>
-      <div class="cal-day">24</div>
-      <div class="cal-day cal-weekend">25</div>
-      <div class="cal-day cal-weekend">26</div>
-
-      <!-- Tuần 5: 27→30 -->
-      <div class="cal-day">27</div>
-      <div class="cal-day">28</div>
-      <div class="cal-day">29</div>
-      <div class="cal-day">30</div>
-      <div></div><div></div><div></div>
+      <div class="cal-cell">17</div>
+      <div class="cal-cell weekend">18</div><div class="cal-cell weekend">19</div>
+      <div class="cal-cell">20</div><div class="cal-cell">21</div><div class="cal-cell">22</div>
+      <div class="cal-cell">23</div><div class="cal-cell">24</div>
+      <div class="cal-cell weekend">25</div><div class="cal-cell weekend">26</div>
+      <div class="cal-cell">27</div><div class="cal-cell">28</div><div class="cal-cell">29</div>
+      <div class="cal-cell">30</div>
+      <div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div>
     </div>
 
-    <!-- Chú thích -->
-    <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:22px;border-top:1px solid var(--cream-dark);padding-top:16px;">
-      <span style="font-size:1rem;color:var(--red-light);">♡</span>
-      <span style="font-size:0.62rem;font-weight:600;letter-spacing:1.5px;color:var(--text-mid);text-transform:uppercase;">Ngày Trọng Đại · 15 &amp; 16/04/2026</span>
-      <span style="font-size:1rem;color:var(--red-light);">♡</span>
+    <div class="cal-legend">
+      <div class="cal-legend-item"><span style="color:var(--red-light);">♡</span>15/04 · Lễ Thành Hôn</div>
+      <div class="cal-legend-sep"></div>
+      <div class="cal-legend-item"><span style="color:var(--red-light);">♡</span>16/04 · Lễ Vu Quy</div>
     </div>
   </div>
 </section>
