@@ -63,103 +63,310 @@
   }
 
   /* ===== HERO ===== */
-  #hero {
-    padding-top: 56px; background: var(--cream);
-    text-align: center; padding-bottom: 60px;
-    position: relative; overflow: hidden;
-  }
-  .hero-deco-top { display: flex; justify-content: space-between; padding: 0 60px; margin-top: 30px; }
-  .corner-bracket {
-    width: 60px; height: 60px;
-    background-image: url('Border.png'); background-size: contain;
-    background-repeat: no-repeat; opacity: 0.8; transition: transform 0.3s ease;
-  }
-  .corner-bracket.tl { transform: rotate(90deg); }
-  .corner-bracket.tr { transform: rotate(180deg); }
-  .corner-bracket.bl { transform: rotate(0deg); }
-  .corner-bracket.br { transform: rotate(-90deg); }
-  .hero-snowflake { font-size: 1.2rem; color: var(--red-light); margin: 20px auto 0; display: block; letter-spacing: 4px; }
-  .hero-names {
-    font-family: 'Great Vibes', cursive;
-    font-size: clamp(3rem, 7vw, 5.5rem); color: var(--red-light);
-    line-height: 1.1; margin: 10px 0 5px;
-    text-shadow: 1px 2px 8px rgba(155,28,46,0.1);
-    animation: fadeInDown 1s ease both;
-  }
-  .hero-ampersand { display: block; font-size: clamp(2.5rem, 5vw, 4rem); }
-  .hero-date {
-    font-family: 'Cormorant Garamond', serif; font-size: 1.25rem;
-    font-weight: 500; letter-spacing: 4px; color: var(--text-dark);
-    margin: 16px 0 8px; animation: fadeInUp 1s ease 0.3s both;
-  }
-  .hero-lunar { font-size: 0.75rem; color: var(--red); letter-spacing: 1px; margin-bottom: 16px; }
-  .hero-divider { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 10px 0; }
-  .hero-divider::before, .hero-divider::after {
-    content: ''; display: block; width: 60px; height: 1px; background: var(--gold); opacity: 0.7;
-  }
-  .hero-divider-dot { width: 6px; height: 6px; background: var(--red-light); border-radius: 50%; }
-  .hero-deco-bottom { display: flex; justify-content: space-between; padding: 0 60px; margin-top: 0; }
+#hero {
+  padding-top: 56px;
+  background: var(--cream);
+  position: relative;
+  overflow: hidden;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
-  /* ===== COUNTDOWN ===== */
-  #countdown { background: var(--cream); padding: 30px 20px 50px; text-align: center; }
-  .countdown-box {
-    border: 1.5px solid var(--red-light); max-width: 580px;
-    margin: 0 auto; padding: 36px 28px 32px; background: var(--white);
-    position: relative; overflow: hidden;
+/* Nền hoa văn mờ */
+#hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(212,175,55,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 50%, rgba(194,0,32,0.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Đường viền vàng mỏng bao quanh */
+#hero::after {
+  content: '';
+  position: absolute;
+  inset: 72px 20px 20px;
+  border: 1px solid rgba(212,175,55,0.2);
+  pointer-events: none;
+}
+
+/* ---- Layout chính ---- */
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 40px 24px 48px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: auto;
+  align-items: center;
+  gap: 0 32px;
+}
+
+/* ---- CỘT TRÁI: thông tin nhà trai/ngày ---- */
+.hero-left {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0;
+
+  opacity: 0;
+  transform: translateX(-48px);
+  animation: heroSlideRight 1.2s cubic-bezier(0.22,1,0.36,1) 0.6s forwards;
+}
+
+/* ---- CỘT GIỮA: ảnh cưới ---- */
+.hero-photo-wrap {
+  position: relative;
+  width: clamp(180px, 28vw, 280px);
+  flex-shrink: 0;
+
+  opacity: 0;
+  transform: translateY(36px) scale(0.96);
+  animation: heroPhotoIn 1.4s cubic-bezier(0.22,1,0.36,1) 0.2s forwards;
+}
+
+.hero-photo-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+}
+
+/* Khung vàng trang trí */
+.hero-photo-frame::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border: 1.5px solid rgba(212,175,55,0.55);
+  z-index: 2;
+  pointer-events: none;
+}
+.hero-photo-frame::after {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  border: 1px solid rgba(212,175,55,0.22);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero-photo-frame img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: transform 6s ease;
+}
+#hero:hover .hero-photo-frame img {
+  transform: scale(1.04);
+}
+
+/* Chấm vàng góc ảnh */
+.hero-photo-dot {
+  position: absolute;
+  width: 8px; height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  z-index: 3;
+  box-shadow: 0 0 0 3px var(--cream);
+}
+.hero-photo-dot.tl { top: -10px; left: -10px; }
+.hero-photo-dot.tr { top: -10px; right: -10px; }
+.hero-photo-dot.bl { bottom: -10px; left: -10px; }
+.hero-photo-dot.br { bottom: -10px; right: -10px; }
+
+/* Nhãn tên dưới ảnh */
+.hero-photo-label {
+  text-align: center;
+  margin-top: 16px;
+}
+.hero-photo-label-names {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  color: var(--red-light);
+  line-height: 1;
+  display: block;
+}
+.hero-photo-label-amp {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+  color: var(--gold);
+  display: block;
+  margin: 2px 0;
+}
+
+/* ---- CỘT PHẢI: thông tin nhà gái/giờ ---- */
+.hero-right {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+
+  opacity: 0;
+  transform: translateX(48px);
+  animation: heroSlideLeft 1.2s cubic-bezier(0.22,1,0.36,1) 0.6s forwards;
+}
+
+/* ---- PHẦN TRÊN: tiêu đề ---- */
+.hero-top-title {
+  text-align: center;
+  width: 100%;
+  grid-column: 1 / -1;
+  padding-bottom: 28px;
+
+  opacity: 0;
+  animation: heroFadeUp 1s ease 0.1s forwards;
+}
+.hero-top-snowflake {
+  font-size: 0.9rem;
+  color: var(--gold);
+  letter-spacing: 6px;
+  display: block;
+  margin-bottom: 10px;
+}
+.hero-top-tag {
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--text-mid);
+  display: block;
+}
+
+/* ---- NỘI DUNG CỘT ---- */
+.hero-col-tag {
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--red-light);
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+.hero-col-name {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  color: var(--red);
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+.hero-col-divider {
+  width: 28px; height: 1px;
+  background: var(--gold); opacity: 0.6;
+  margin: 10px 0;
+}
+.hero-right .hero-col-divider { margin-left: 0; }
+.hero-left .hero-col-divider { margin-left: auto; }
+.hero-col-date {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(0.72rem, 1.5vw, 0.9rem);
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--text-dark);
+  line-height: 1.7;
+}
+.hero-col-lunar {
+  font-size: 0.58rem;
+  color: var(--red);
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+  opacity: 0.75;
+}
+.hero-col-time {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  font-weight: 600;
+  color: var(--red-light);
+  letter-spacing: 3px;
+  margin-top: 6px;
+}
+
+/* ---- PHẦN DƯỚI: địa điểm ---- */
+.hero-bottom-bar {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding-top: 24px;
+  border-top: 1px solid rgba(212,175,55,0.25);
+  margin-top: 8px;
+
+  opacity: 0;
+  animation: heroFadeUp 1s ease 1.4s forwards;
+}
+.hero-bottom-location {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.78rem;
+  letter-spacing: 2px;
+  color: var(--text-mid);
+  font-style: italic;
+}
+.hero-bottom-location strong {
+  color: var(--red-light);
+  font-weight: 600;
+  font-style: normal;
+}
+
+/* Góc bracket */
+.hero-deco-top { display: flex; justify-content: space-between; padding: 0 20px; position: absolute; top: 68px; left: 0; right: 0; }
+.hero-deco-bottom { display: flex; justify-content: space-between; padding: 0 20px; position: absolute; bottom: 16px; left: 0; right: 0; }
+
+/* ---- ANIMATIONS ---- */
+@keyframes heroSlideRight {
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes heroSlideLeft {
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes heroPhotoIn {
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes heroFadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 600px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 0;
+    padding: 24px 16px 36px;
+    justify-items: center;
   }
-  .cd-petals { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-  .petal { position: absolute; opacity: 0.15; animation: float-petal 8s ease-in-out infinite; }
-  @keyframes float-petal {
-    0%   { transform: translateY(0px) rotate(0deg); opacity: 0.15; }
-    50%  { transform: translateY(-12px) rotate(15deg); opacity: 0.25; }
-    100% { transform: translateY(0px) rotate(0deg); opacity: 0.15; }
+  .hero-top-title { padding-bottom: 20px; }
+  .hero-photo-wrap {
+    width: clamp(150px, 55vw, 220px);
+    order: 2;
   }
-  .cd-corner-deco { position: absolute; width: 44px; height: 44px; opacity: 0.5; }
-  .cd-corner-deco svg { width: 100%; height: 100%; }
-  .cd-corner-deco.tl { top: 6px; left: 6px; }
-  .cd-corner-deco.tr { top: 6px; right: 6px; transform: scaleX(-1); }
-  .cd-corner-deco.bl { bottom: 6px; left: 6px; transform: scaleY(-1); }
-  .cd-corner-deco.br { bottom: 6px; right: 6px; transform: scale(-1); }
-  .countdown-title { font-size: 0.52rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--text-dark); margin-bottom: 4px; }
-  .countdown-title span { color: var(--red-light); }
-  .cd-heart-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 4px 0 18px; }
-  .cd-heart-row .cd-line { flex: 1; height: 1px; background: var(--gold); opacity: 0.6; max-width: 80px; }
-  .cd-heart-svg { width: 19px; height: 19px; animation: heartbeat 2s ease-in-out infinite; fill: var(--red-light); }
-  @keyframes heartbeat {
-    0%, 100% { transform: scale(1); } 15% { transform: scale(1.28); }
-    30% { transform: scale(1); } 45% { transform: scale(1.15); } 60% { transform: scale(1); }
+  .hero-left {
+    order: 3;
+    align-items: center;
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(212,175,55,0.2);
+    width: 100%;
   }
-  .countdown-grid { display: flex; justify-content: center; align-items: flex-end; gap: 0; }
-  .countdown-item { display: flex; flex-direction: column; align-items: center; }
-  .countdown-num {
-    background: var(--red-light); color: var(--white);
-    font-family: 'Cinzel', serif; font-size: 2.2rem; font-weight: 600;
-    width: 84px; height: 84px; display: flex; align-items: center; justify-content: center;
-    border-radius: 2px; letter-spacing: 2px; position: relative; overflow: hidden; transition: transform 0.15s;
+  .hero-right {
+    order: 4;
+    align-items: center;
+    text-align: center;
+    padding-top: 16px;
+    width: 100%;
   }
-  .countdown-num::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%;
-    background: rgba(255,255,255,0.08);
-  }
-  .cd-sep {
-    font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; color: var(--red-light);
-    padding: 0 4px; margin-bottom: 22px; opacity: 0.7;
-    animation: blink-sep 1.5s ease-in-out infinite;
-  }
-  @keyframes blink-sep { 0%,100%{opacity:0.7} 50%{opacity:0.2} }
-  .countdown-label {
-    font-size: 0.55rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--text-mid); margin-top: 7px; display: flex; align-items: center; gap: 4px;
-  }
-  .label-flower { font-size: 10px; opacity: 0.75; }
-  .cd-footer-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 18px; }
-  .cd-footer-line { flex: 1; height: 1px; background: var(--gold); opacity: 0.4; max-width: 70px; }
-  .cd-footer-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.82rem; color: var(--red); letter-spacing: 0.5px; }
-  .flip-in { animation: flipNum 0.3s ease; }
-  @keyframes flipNum {
-    from { transform: rotateX(90deg) scale(0.8); opacity: 0; }
-    to   { transform: rotateX(0deg) scale(1); opacity: 1; }
-  }
+  .hero-left .hero-col-divider,
+  .hero-right .hero-col-divider { margin: 10px auto; }
+  .hero-bottom-bar { order: 5; }
+  #hero::after { inset: 64px 12px 12px; }
+}
 
   /* ===== GALLERY ===== */
   #gallery { padding: 50px 20px; background: var(--cream); text-align: center; }
@@ -1043,6 +1250,83 @@
   transform: scale(0.93) rotate(var(--angle, 0deg));
 }
 
+/* ===== CLOUD TRANSITION ===== */
+#cloud-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  overflow: hidden;
+  /* Ban đầu ẩn — chỉ hiện khi cần */
+  opacity: 0;
+  transition: opacity 0.01s;
+}
+
+/* Nền kem phủ toàn màn hình */
+.cloud-bg {
+  position: absolute;
+  inset: 0;
+  background: rgba(253, 248, 240, 0.96);
+  transition: opacity 1s ease 1.2s;
+}
+
+/* Mây trái — xuất phát từ giữa, kéo sang trái */
+.cloud-half-left {
+  position: absolute;
+  left: -10%;
+  top: -20%;
+  width: 70%;
+  height: 140%;
+  transition: transform 1.8s cubic-bezier(0.76, 0, 0.24, 1);
+  transform: translateX(0%);
+}
+.cloud-half-left img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: right center;
+  filter: drop-shadow(6px 0 20px rgba(255,255,255,0.8));
+}
+
+/* Mây phải — xuất phát từ giữa, kéo sang phải */
+.cloud-half-right {
+  position: absolute;
+  right: -10%;
+  top: -20%;
+  width: 70%;
+  height: 140%;
+  transition: transform 1.8s cubic-bezier(0.76, 0, 0.24, 1);
+  transform: translateX(0%);
+}
+.cloud-half-right img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: left center;
+  transform: scaleX(-1);
+  filter: drop-shadow(-6px 0 20px rgba(255,255,255,0.8));
+}
+
+/* Trạng thái hiển thị — che kín màn hình */
+#cloud-overlay.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Trạng thái mở — mây kéo ra 2 bên */
+#cloud-overlay.opening .cloud-half-left {
+  transform: translateX(-110%);
+}
+#cloud-overlay.opening .cloud-half-right {
+  transform: translateX(110%);
+}
+#cloud-overlay.opening .cloud-bg {
+  opacity: 0;
+}
+
+/* Ẩn hoàn toàn */
+#cloud-overlay.done {
+  display: none;
+}
+
 </style>
 </head>
 <body>
@@ -1140,6 +1424,17 @@
 
 </div><!-- /envelope-overlay -->
 
+<!-- CLOUD TRANSITION OVERLAY -->
+<!-- CLOUD TRANSITION OVERLAY -->
+<div id="cloud-overlay">
+  <div class="cloud-bg"></div>
+  <div class="cloud-half-left">
+    <img src="cloud.png" alt="">
+  </div>
+  <div class="cloud-half-right">
+    <img src="cloud.png" alt="">
+  </div>
+</div>
 
 <!-- NAVBAR -->
 <nav>
@@ -1155,25 +1450,76 @@
     <li><a href="#rsvp" class="nav-btn">Phản Hồi</a></li>
   </ul>
 </nav>
-
 <!-- HERO -->
 <section id="hero">
+
+  <!-- Góc trang trí -->
   <div class="hero-deco-top">
     <div class="corner-bracket tl"></div>
     <div class="corner-bracket tr"></div>
   </div>
-  <span class="hero-snowflake">✦ ✦ ✦</span>
-  <h1 class="hero-names">
-    Gia Luân
-    <span class="hero-ampersand">&amp;</span>
-    Ngọc Yến
-  </h1>
-  <p class="hero-date">Thứ Năm · 15 · 04 · 2026 & Thứ Sáu 16 · 04 · 2026</p>
-  <p class="hero-lunar">(Tức ngày 28 và 29 tháng 2 năm Bính Ngọ)</p>
-  <div class="hero-divider"><div class="hero-divider-dot"></div></div>
-  <div class="hero-deco-bottom" style="margin-top:20px;">
+  <div class="hero-deco-bottom">
     <div class="corner-bracket bl"></div>
     <div class="corner-bracket br"></div>
+  </div>
+
+  <div class="hero-inner">
+
+    <!-- Tiêu đề trên -->
+    <div class="hero-top-title">
+      <span class="hero-top-snowflake">✦ &nbsp; ✦ &nbsp; ✦</span>
+      <span class="hero-top-tag">Trân trọng kính mời</span>
+    </div>
+
+    <!-- CỘT TRÁI — Nhà Trai & Ngày -->
+    <div class="hero-left">
+      <div class="hero-col-tag">✦ Lễ Thành Hôn</div>
+      <div class="hero-col-name">Phạm Gia Luân</div>
+      <div class="hero-col-divider"></div>
+      <div class="hero-col-date">
+        Thứ Năm · 15 · 04 · 2026
+      </div>
+      <div class="hero-col-lunar">28 tháng 2 năm Bính Ngọ</div>
+      <div class="hero-col-time">10:00</div>
+    </div>
+
+    <!-- CỘT GIỮA — Ảnh -->
+    <div class="hero-photo-wrap">
+      <div class="hero-photo-frame">
+        <img src="images/anhcuoi.jpg" alt="Gia Luân & Ngọc Yến">
+        <div class="hero-photo-dot tl"></div>
+        <div class="hero-photo-dot tr"></div>
+        <div class="hero-photo-dot bl"></div>
+        <div class="hero-photo-dot br"></div>
+      </div>
+      <div class="hero-photo-label">
+        <span class="hero-photo-label-names">Gia Luân</span>
+        <span class="hero-photo-label-amp">&amp;</span>
+        <span class="hero-photo-label-names">Ngọc Yến</span>
+      </div>
+    </div>
+
+    <!-- CỘT PHẢI — Nhà Gái & Ngày -->
+    <div class="hero-right">
+      <div class="hero-col-tag">✦ Lễ Vu Quy</div>
+      <div class="hero-col-name">Nguyễn Thị Ngọc Yến</div>
+      <div class="hero-col-divider"></div>
+      <div class="hero-col-date">
+        Thứ Sáu · 16 · 04 · 2026
+      </div>
+      <div class="hero-col-lunar">29 tháng 2 năm Bính Ngọ</div>
+      <div class="hero-col-time">10:00</div>
+    </div>
+
+    <!-- Thanh dưới — địa điểm -->
+    <div class="hero-bottom-bar">
+      <div class="hero-bottom-location">
+        <strong>Đồng Tháp</strong> &nbsp;·&nbsp; Tổ 12, ấp Tân Thạnh 2, xã Phú Hựu
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        Tổ 11, ấp An Ninh, xã Tân Thuận Đông
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -1530,9 +1876,27 @@
 
 function openEnvelope() {
   const overlay = document.getElementById('envelope-overlay');
-  overlay.classList.add('opening');
-  setTimeout(() => { overlay.classList.add('gone'); document.body.style.overflow = ''; }, 1100);
-  setTimeout(() => { overlay.remove(); }, 2200);
+  const cloudOverlay = document.getElementById('cloud-overlay');
+
+  /* 1. Mây hiện ra che màn hình (đã có sẵn — không cần thêm class) */
+
+  /* 2. Sau 0.3s: bắt đầu đóng phong bì */
+  setTimeout(() => {
+    overlay.classList.add('opening');
+  }, 300);
+
+  /* 3. Sau 1s: mây bắt đầu kéo ra 2 bên, lộ nội dung */
+  setTimeout(() => {
+    cloudOverlay.classList.add('opening');
+    overlay.classList.add('gone');
+    document.body.style.overflow = '';
+  }, 1000);
+
+  /* 4. Sau 2.8s: ẩn hoàn toàn cả 2 overlay */
+  setTimeout(() => {
+    overlay.remove();
+    cloudOverlay.classList.add('done');
+  }, 2800);
 }
 
 document.body.style.overflow = 'hidden';
