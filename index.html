@@ -1480,7 +1480,20 @@
   <p class="footer-quote">"Cảm ơn vì đã là một phần quan trọng trong câu chuyện tình yêu của chúng con. Mong gặp lại mọi người trong ngày vui đại hỷ."</p>
   <div class="footer-divider"></div>
 </footer>
-
+<!-- NÚT NHẠC NỀN -->
+<div id="music-btn" onclick="toggleMusic()" title="Nhạc nền">
+  <div class="vinyl-disc">
+    <div class="vinyl-center"></div>
+    <div class="vinyl-ring r1"></div>
+    <div class="vinyl-ring r2"></div>
+    <div class="vinyl-ring r3"></div>
+    <div class="vinyl-label">
+      <span>L</span><span class="amp">&</span><span>Y</span>
+    </div>
+  </div>
+  <div class="music-tooltip" id="music-tooltip">Nhạc nền</div>
+</div>
+<audio id="bg-music" src="cominhvata.mp3" loop preload="auto"></audio>
 <!-- SCRIPTS -->
 <script>
 /* ============================================================
@@ -1681,20 +1694,6 @@ async function submitRSVP() {
   finally { btnSubmit.innerText = originalBtnText; btnSubmit.disabled = false; }
 }
 </script>
-<!-- NÚT NHẠC NỀN -->
-<div id="music-btn" onclick="toggleMusic()" title="Nhạc nền">
-  <div class="vinyl-disc">
-    <div class="vinyl-center"></div>
-    <div class="vinyl-ring r1"></div>
-    <div class="vinyl-ring r2"></div>
-    <div class="vinyl-ring r3"></div>
-    <div class="vinyl-label">
-      <span>L</span><span class="amp">&</span><span>Y</span>
-    </div>
-  </div>
-  <div class="music-tooltip" id="music-tooltip">Nhạc nền</div>
-</div>
-<audio id="bg-music" src="cominhvata.mp3" loop preload="auto"></audio>
 
 </body>
 </html>
