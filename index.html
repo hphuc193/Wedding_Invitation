@@ -24,7 +24,7 @@
   html { scroll-behavior: smooth; }
   body {
     font-family: 'Montserrat', sans-serif;
-    background: var(--cream);
+    background: var(--white);
     color: var(--text-dark);
     overflow-x: hidden;
   }
@@ -911,6 +911,138 @@
   .fp-moment-item:nth-child(2) { margin-top: -18px !important; }
 }
 
+/* ===== NÚT ĐĨA THAN NHẠC NỀN ===== */
+#music-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 24px;
+  z-index: 999;
+  width: 54px;
+  height: 54px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Đĩa than */
+.vinyl-disc {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background:
+    repeating-radial-gradient(
+      circle at center,
+      #1a1a1a 0px, #2a2a2a 2px,
+      #111 4px, #222 6px,
+      #1a1a1a 8px, #2c2c2c 10px
+    );
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 4px 20px rgba(0,0,0,0.45),
+    0 1px 4px rgba(0,0,0,0.3),
+    inset 0 0 0 1px rgba(255,255,255,0.06);
+  transition: box-shadow 0.3s ease;
+  /* Mặc định đứng yên */
+  animation: none;
+}
+
+/* Khi đang phát — quay */
+#music-btn.playing .vinyl-disc {
+  animation: vinylSpin 3s linear infinite;
+}
+
+@keyframes vinylSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Vòng rãnh đĩa */
+.vinyl-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 0.5px solid rgba(255,255,255,0.06);
+  pointer-events: none;
+}
+.vinyl-ring.r1 { width: 44px; height: 44px; }
+.vinyl-ring.r2 { width: 34px; height: 34px; }
+.vinyl-ring.r3 { width: 24px; height: 24px; }
+
+/* Nhãn giữa đĩa */
+.vinyl-label {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #C20020, #8B0000);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  gap: 0px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+.vinyl-label span {
+  font-family: 'Great Vibes', cursive;
+  font-size: 5.5px;
+  color: rgba(255,255,255,0.9);
+  line-height: 1;
+}
+.vinyl-label .amp {
+  font-size: 4.5px;
+  color: #D4AF37;
+  margin: 0 0.5px;
+}
+
+/* Lỗ kim giữa đĩa */
+.vinyl-center {
+  position: absolute;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: #0a0a0a;
+  z-index: 3;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.1);
+}
+
+/* Tooltip */
+.music-tooltip {
+  position: absolute;
+  bottom: 60px;
+  right: 0;
+  background: rgba(44,24,16,0.88);
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  padding: 5px 10px;
+  border-radius: 3px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.music-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%; right: 18px;
+  border: 5px solid transparent;
+  border-top-color: rgba(44,24,16,0.88);
+}
+#music-btn:hover .music-tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hiệu ứng nhấn */
+#music-btn:active .vinyl-disc {
+  transform: scale(0.93);
+}
+#music-btn.playing:active .vinyl-disc {
+  transform: scale(0.93) rotate(var(--angle, 0deg));
+}
+
 </style>
 </head>
 <body>
@@ -1478,6 +1610,48 @@ const momentObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.12 });
 momentEls.forEach(el => momentObserver.observe(el));
 
+/* ===== NHẠC NỀN ===== */
+const bgMusic   = document.getElementById('bg-music');
+const musicBtn  = document.getElementById('music-btn');
+const tooltip   = document.getElementById('music-tooltip');
+let musicStarted = false;
+
+function toggleMusic() {
+  if (bgMusic.paused) {
+    bgMusic.play().then(() => {
+      musicBtn.classList.add('playing');
+      tooltip.textContent = 'Tắt nhạc';
+    }).catch(() => {});
+  } else {
+    bgMusic.pause();
+    musicBtn.classList.remove('playing');
+    tooltip.textContent = 'Bật nhạc';
+  }
+}
+
+/* Tự động phát sau khi người dùng tương tác lần đầu */
+function autoPlayOnInteraction() {
+  if (musicStarted) return;
+  musicStarted = true;
+  bgMusic.volume = 0;
+  bgMusic.play().then(() => {
+    musicBtn.classList.add('playing');
+    tooltip.textContent = 'Tắt nhạc';
+    /* Fade in âm lượng từ 0 → 0.5 trong 2 giây */
+    let vol = 0;
+    const fadeIn = setInterval(() => {
+      vol = Math.min(vol + 0.025, 0.5);
+      bgMusic.volume = vol;
+      if (vol >= 0.5) clearInterval(fadeIn);
+    }, 100);
+  }).catch(() => { musicStarted = false; });
+  document.removeEventListener('click', autoPlayOnInteraction);
+  document.removeEventListener('touchstart', autoPlayOnInteraction);
+}
+
+document.addEventListener('click', autoPlayOnInteraction);
+document.addEventListener('touchstart', autoPlayOnInteraction);
+
 /* RSVP Submit */
 async function submitRSVP() {
   const API_URL = "https://script.google.com/macros/s/AKfycbxY1IU0o0wJAkM_y7CaWh2msrhbiHunU2I0lp7y7I3UcrzlvsNJehxWgpuUORVilTq4/exec";
@@ -1507,6 +1681,20 @@ async function submitRSVP() {
   finally { btnSubmit.innerText = originalBtnText; btnSubmit.disabled = false; }
 }
 </script>
+<!-- NÚT NHẠC NỀN -->
+<div id="music-btn" onclick="toggleMusic()" title="Nhạc nền">
+  <div class="vinyl-disc">
+    <div class="vinyl-center"></div>
+    <div class="vinyl-ring r1"></div>
+    <div class="vinyl-ring r2"></div>
+    <div class="vinyl-ring r3"></div>
+    <div class="vinyl-label">
+      <span>L</span><span class="amp">&</span><span>Y</span>
+    </div>
+  </div>
+  <div class="music-tooltip" id="music-tooltip">Nhạc nền</div>
+</div>
+<audio id="bg-music" src="cominhvata.mp3" loop preload="auto"></audio>
 
 </body>
 </html>
